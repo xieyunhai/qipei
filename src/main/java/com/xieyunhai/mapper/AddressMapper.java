@@ -10,10 +10,10 @@ import org.apache.ibatis.annotations.Options;
  */
 public interface AddressMapper {
 
-    @Insert("insert into address(user_id, name, receive_name, alias, post_code, telephone, cellphone, province, " +
-            "district, city, street, remarks, status, create_time, update_time) value(#{userId}, #{name}, " +
-            "#{receiveName}, #{alias}, #{postCode}, #{telephone}, #{cellphone}, #{province}, #{district}, #{city}, " +
-            "#{street}), #{remarks}, #{status}, Date.now(), Date.now()")
+    @Insert("insert into address (user_id, name, receive_name, alias, post_code, telephone, " +
+            "cellphone, province, district, city, street, remarks, status, create_time, update_time) " +
+            "value(#{userId}, #{name}, #{receiveName}, #{alias}, #{postCode}, #{telephone}, " +
+            "#{cellphone}, #{province}, #{district}, #{city}, #{street}, #{remarks}, #{status}, now(), now())")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     void save(Address address);
 }

@@ -1,7 +1,5 @@
 package com.xieyunhai.domin;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -9,8 +7,6 @@ import java.util.Date;
  * @date 17-6-29 下午8:50
  */
 public class Address {
-    @Id
-    @GeneratedValue
     private int id;
     private int userId;
     private String name;
