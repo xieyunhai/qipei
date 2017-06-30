@@ -33,6 +33,7 @@ public interface AddressMapper extends BaseMapper<Address> {
     Address getAddressByPrimaryKey(Integer id);
 
     /**
+     * // todo 好像还是不能共用
      * 增加地址 - 管理员用户和当前用户共用
      * @param address address
      * @return count
@@ -41,7 +42,7 @@ public interface AddressMapper extends BaseMapper<Address> {
             "cellphone, province, district, city, street, remarks, status, create_time, update_time) " +
             "VALUES (#{userId}, #{name}, #{receiveName}, #{alias}, #{postCode}, #{telephone}, " +
             "#{cellphone}, #{province}, #{district}, #{city}, #{street}, #{remarks}, #{status}, now(), now())")
-    @Options(useGeneratedKeys = true, keyColumn = "id")
+    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     int saveAddress(Address address);
 
     /**
@@ -87,6 +88,7 @@ public interface AddressMapper extends BaseMapper<Address> {
      * @return address
      */
     @Select("SELECT * FROM address WHERE id = #{id} AND user_id = #{userId}")
+    @ResultMap(value = "com.xieyunhai.mapper.AddressMapper.addressResult")
     Address getAddressByPrimaryKeyAndUserId(@Param("id") Integer id, @Param("userId") Integer userId);
 
     /**
@@ -118,5 +120,5 @@ public interface AddressMapper extends BaseMapper<Address> {
      * @param userId user
      */
     @Delete("DELETE FROM address WHERE id = #{id} AND user_id = #{userId}")
-    int removeAddressByPrimaryKeyAndUserId(Integer id, Integer userId);
+    int removeAddressByPrimaryKeyAndUserId(@Param("id") Integer id, @Param("userId") Integer userId);
 }

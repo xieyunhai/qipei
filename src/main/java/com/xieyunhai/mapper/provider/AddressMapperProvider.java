@@ -61,43 +61,43 @@ public class AddressMapperProvider {
             {
                 UPDATE("address");
                 if (address.getName() != null) {
-                    SET("name = #{name}");
+                    SET("name = #{address.name}");
                 }
                 if (address.getReceiveName() != null) {
-                    SET("receive_name = #{receiveName}");
+                    SET("receive_name = #{address.receiveName}");
                 }
                 if (address.getAlias() != null) {
-                    SET("alias = #{alias}");
+                    SET("alias = #{address.alias}");
                 }
                 if (address.getPostCode() != null) {
-                    SET("post_code = #{postCode}");
+                    SET("post_code = #{address.postCode}");
                 }
                 if (address.getTelephone() != null) {
-                    SET("telephone = #{telephone}");
+                    SET("telephone = #{address.telephone}");
                 }
                 if (address.getCellphone() != null) {
-                    SET("cellphone = #{cellphone}");
+                    SET("cellphone = #{address.cellphone}");
                 }
                 if (address.getProvince() != null) {
-                    SET("province = #{province}");
+                    SET("province = #{address.province}");
                 }
                 if (address.getDistrict() != null) {
-                    SET("district = #{district}");
+                    SET("district = #{address.district}");
                 }
                 if (address.getCity() != null) {
-                    SET("city = #{city}");
+                    SET("city = #{address.city}");
                 }
                 if (address.getStreet() != null) {
-                    SET("street = #{street}");
+                    SET("street = #{address.street}");
                 }
                 if (address.getRemarks() != null) {
-                    SET("remarks = #{remarks}");
+                    SET("remarks = #{address.remarks}");
                 }
                 if (address.getStatus() != null) {
-                    SET("status = #{status}");
+                    SET("status = #{address.status}");
                 }
                 SET("update_time = now()");
-                WHERE("id = #{id}");
+                WHERE("id = #{address.id}");
                 WHERE("user_id = #{userId}");
             }
         }.toString();

@@ -40,6 +40,10 @@ public class Address extends BaseEntity {
         this.id = id;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
     public void setUserId(Integer userId) {
         this.userId = userId;
     }

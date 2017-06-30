@@ -22,7 +22,8 @@ public class AddressController {
     @GetMapping("/")
     public HttpResult<List<Address>> listAddressesByUserId() {
         // todo 通过 session 获得 userId
-        return addressService.listAddressesByUserId(1);
+        HttpResult<List<Address>> httpResult = addressService.listAddressesByUserId(1);
+        return httpResult;
     }
 
     @GetMapping("/{id}")

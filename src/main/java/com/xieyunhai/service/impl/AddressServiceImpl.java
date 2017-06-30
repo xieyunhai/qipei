@@ -49,7 +49,7 @@ public class AddressServiceImpl implements AddressService {
     public HttpResult<Address> saveAddress(Address address) {
         int count = addressMapper.saveAddress(address);
         if (count > 0) {
-            return HttpResultUtil.success(address);
+            return HttpResultUtil.success(addressMapper.getAddressByPrimaryKey(address.getId()));
         } else {
             return HttpResultUtil.error(HttpResultCode.SERVER_ERROR.getCode());
         }
@@ -101,7 +101,7 @@ public class AddressServiceImpl implements AddressService {
         address.setUserId(userId);
         int count = addressMapper.saveAddress(address);
         if (count > 0) {
-            return HttpResultUtil.success(address);
+            return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(address.getId(), userId));
         } else {
             return HttpResultUtil.error(HttpResultCode.SERVER_ERROR.getCode());
         }
