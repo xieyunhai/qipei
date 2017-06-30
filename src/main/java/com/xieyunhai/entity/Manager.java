@@ -1,4 +1,4 @@
-package com.xieyunhai.domin;
+package com.xieyunhai.entity;
 
 /**
  * @author noobit

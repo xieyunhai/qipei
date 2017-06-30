@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @date 17-6-29 下午9:30
  */
 /* todo json 序列化 */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class HttpResult<T> implements Serializable {
 
     /* 错误码 */

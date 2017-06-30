@@ -5,8 +5,9 @@ package com.xieyunhai.common;
  * @date 17-6-29 下午9:37
  */
 public enum HttpResultCode {
-    UNKONW_ERROR(-1, "未知错误"),
+    UN_KNOW(-1, "未知错误"),
     SUCCESS(0, "success"),
+    NOT_FOUND(404, "没有找到"),
     ERROR(1, "权限不足"),
     NEED_LOGIN(10, "需要登录"),
     SERVER_ERROR(500, "服务器错误");

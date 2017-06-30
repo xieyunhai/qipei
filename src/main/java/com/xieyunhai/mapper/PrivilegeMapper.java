@@ -1,8 +1,13 @@
 package com.xieyunhai.mapper;
 
+import com.xieyunhai.entity.Privilege;
+import com.xieyunhai.util.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+
 /**
  * @author noobit
  * @date 17-6-29 下午9:18
  */
-public interface PrivilegeMapper {
+@Mapper
+public interface PrivilegeMapper extends BaseMapper<Privilege> {
 }

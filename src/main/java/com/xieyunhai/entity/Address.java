@@ -1,14 +1,22 @@
-package com.xieyunhai.domin;
+package com.xieyunhai.entity;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
  * @author noobit
  * @date 17-6-29 下午8:50
  */
-public class Address {
-    private int id;
-    private int userId;
+public class Address extends BaseEntity {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private Integer userId;
     private String name;
     private String receiveName;
     private Short alias;
@@ -24,19 +32,15 @@ public class Address {
     private Date createTime;
     private Date updateTime;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

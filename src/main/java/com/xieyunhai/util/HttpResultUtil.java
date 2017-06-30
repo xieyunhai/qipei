@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * @author noobit
  * @date 17-6-29 下午9:10
  */
-public class HttpResultUtil {
+public class HttpResultUtil<T> {
 
     /**
      * 请求成功, 无数据返回
@@ -52,7 +52,7 @@ public class HttpResultUtil {
      * @param errorCode 枚举包含的 code
      * @return fail: code, msg
      */
-    public static HttpResult error(int errorCode) {
+    public static HttpResult error(Integer errorCode) {
         List<HttpResultCode> resultCodes = Arrays.stream(HttpResultCode.values())
                 .filter(code -> code.getCode() == errorCode)
                 .collect(Collectors.toList());
@@ -64,6 +64,6 @@ public class HttpResultUtil {
      * @return fail: code, msg
      */
     public static HttpResult error() {
-        return error(HttpResultCode.UNKONW_ERROR.getCode(), HttpResultCode.UNKONW_ERROR.getDesc());
+        return error(HttpResultCode.UN_KNOW.getCode(), HttpResultCode.UN_KNOW.getDesc());
     }
 }
