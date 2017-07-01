@@ -6,6 +6,7 @@ import com.xieyunhai.service.AddressService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.websocket.Session;
 import java.util.List;
 
 /**
@@ -20,8 +21,9 @@ public class AddressController {
     private AddressService addressService;
 
     @GetMapping("/")
-    public HttpResult<List<Address>> listAddressesByUserId() {
+    public HttpResult<List<Address>> listAddressesByUserId(Session session) {
         // todo 通过 session 获得 userId
+
         HttpResult<List<Address>> httpResult = addressService.listAddressesByUserId(1);
         return httpResult;
     }

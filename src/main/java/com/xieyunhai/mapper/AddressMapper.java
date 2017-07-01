@@ -33,8 +33,7 @@ public interface AddressMapper extends BaseMapper<Address> {
     Address getAddressByPrimaryKey(Integer id);
 
     /**
-     * // todo 好像还是不能共用
-     * 增加地址 - 管理员用户和当前用户共用
+     * 增加地址 - 管理员用户
      * @param address address
      * @return count
      */
@@ -45,16 +44,16 @@ public interface AddressMapper extends BaseMapper<Address> {
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     int saveAddress(Address address);
 
-    /**
-     * 更新地址全部内容 - 管理员用户调用
-     * @param address address
-     * @return count
-     */
-    @Update("UPDATE address SET name = #{name}, receive_name = #{receiveName}, alias = #{alias}, " +
-            "post_code = #{postCode}, telephone = #{telephone}, cellphone = #{cellphone}, " +
-            "province = #{province}, district = #{district}, city = #{city}, street = #{street}, " +
-            "remarks = #{remarks}, status = #{status}, update_time = now() WHERE id = #{id}")
-    int updateAddressByPrimaryKey(Address address);
+//    /**
+//     * 更新地址全部内容 - 管理员用户调用
+//     * @param address address
+//     * @return count
+//     */
+//    @Update("UPDATE address SET name = #{name}, receive_name = #{receiveName}, alias = #{alias}, " +
+//            "post_code = #{postCode}, telephone = #{telephone}, cellphone = #{cellphone}, " +
+//            "province = #{province}, district = #{district}, city = #{city}, street = #{street}, " +
+//            "remarks = #{remarks}, status = #{status}, update_time = now() WHERE id = #{id}")
+//    int updateAddressByPrimaryKey(Address address);
 
     /**
      * 选择性更新地址内容 - 管理员用户调用
@@ -91,18 +90,18 @@ public interface AddressMapper extends BaseMapper<Address> {
     @ResultMap(value = "com.xieyunhai.mapper.AddressMapper.addressResult")
     Address getAddressByPrimaryKeyAndUserId(@Param("id") Integer id, @Param("userId") Integer userId);
 
-    /**
-     * 根据用户 id 和 id 更新地址全部内容 - 当前用户调用
-     * @param address address
-     * @param userId userId
-     * @return count
-     */
-    @Update("UPDATE address SET name = #{name}, receive_name = #{receiveName}, alias = #{alias}, " +
-            "post_code = #{postCode}, telephone = #{telephone}, cellphone = #{cellphone}, " +
-            "province = #{province}, district = #{district}, city = #{city}, street = #{street}, " +
-            "remarks = #{remarks}, status = #{status}, update_time = now() WHERE id = #{id} " +
-            "AND user_id = #{userId}")
-    int updateAddressByPrimaryKeyAndUserId(@Param("address") Address address, @Param("userId") int userId);
+//    /**
+//     * 根据用户 id 和 id 更新地址全部内容 - 当前用户调用
+//     * @param address address
+//     * @param userId userId
+//     * @return count
+//     */
+//    @Update("UPDATE address SET name = #{name}, receive_name = #{receiveName}, alias = #{alias}, " +
+//            "post_code = #{postCode}, telephone = #{telephone}, cellphone = #{cellphone}, " +
+//            "province = #{province}, district = #{district}, city = #{city}, street = #{street}, " +
+//            "remarks = #{remarks}, status = #{status}, update_time = now() WHERE id = #{id} " +
+//            "AND user_id = #{userId}")
+//    int updateAddressByPrimaryKeyAndUserId(@Param("address") Address address, @Param("userId") int userId);
 
     /**
      * 根据用户 id 和 id 更新地址部分内容 - 当前用户调用
@@ -121,4 +120,16 @@ public interface AddressMapper extends BaseMapper<Address> {
      */
     @Delete("DELETE FROM address WHERE id = #{id} AND user_id = #{userId}")
     int removeAddressByPrimaryKeyAndUserId(@Param("id") Integer id, @Param("userId") Integer userId);
+
+    /**
+     * 增加地址 - 当前用户调用
+     * @param address address
+     * @return count
+     */
+    @Insert("INSERT INTO address (user_id, name, receive_name, alias, post_code, telephone, " +
+            "cellphone, province, district, city, street, remarks, status, create_time, update_time) " +
+            "VALUES (#{userId}, #{name}, #{receiveName}, #{alias}, #{postCode}, #{telephone}, " +
+            "#{cellphone}, #{province}, #{district}, #{city}, #{street}, #{remarks}, #{status}, now(), now())")
+    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
+    int saveAddressByUserId(Address address);
 }

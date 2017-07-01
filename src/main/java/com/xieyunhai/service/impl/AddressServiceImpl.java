@@ -21,30 +21,16 @@ public class AddressServiceImpl implements AddressService {
     @Resource
     private AddressMapper addressMapper;
 
-    /**
-     * list all address
-     * @return success: addresses
-     */
     @Override
     public HttpResult<List<Address>> listAddresses() {
         return HttpResultUtil.success(addressMapper.listAddresses());
     }
 
-    /**
-     * get address
-     * @param id primary key
-     * @return success: address or null
-     */
     @Override
     public HttpResult<Address> getAddressByPrimaryKey(Integer id) {
         return HttpResultUtil.success(addressMapper.getAddressByPrimaryKey(id));
     }
 
-    /**
-     * 保存地址
-     * @param address address
-     * @return success: address, fail: error
-     */
     @Override
     public HttpResult<Address> saveAddress(Address address) {
         int count = addressMapper.saveAddress(address);
@@ -55,11 +41,6 @@ public class AddressServiceImpl implements AddressService {
         }
     }
 
-    /**
-     * 更新地址
-     * @param address address
-     * @return success: address, fail: error
-     */
     @Override
     public HttpResult<Address> updateAddressByPrimaryKey(Address address) {
         int count = addressMapper.updateAddressByPrimaryKeySelective(address);
@@ -70,11 +51,6 @@ public class AddressServiceImpl implements AddressService {
         }
     }
 
-    /**
-     * 删除地址
-     * @param id primary key
-     * @return success: null, fail: error
-     */
     @Override
     public HttpResult removeAddressByPrimaryKey(Integer id) {
         int count = addressMapper.removeAddressByPrimaryKey(id);
@@ -84,6 +60,8 @@ public class AddressServiceImpl implements AddressService {
             return HttpResultUtil.error(HttpResultCode.SERVER_ERROR.getCode());
         }
     }
+
+
 
     @Override
     public HttpResult<List<Address>> listAddressesByUserId(Integer userId) {
@@ -98,8 +76,9 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public HttpResult<Address> saveAddressByUserId(Address address, Integer userId) {
+        // 判断用户是否横向越权
         address.setUserId(userId);
-        int count = addressMapper.saveAddress(address);
+        int count = addressMapper.saveAddressByUserId(address);
         if (count > 0) {
             return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(address.getId(), userId));
         } else {

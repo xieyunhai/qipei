@@ -1,6 +1,7 @@
 package com.xieyunhai.aspect;
 
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -13,4 +14,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class HttpAspect {
     private final static Logger logger = LoggerFactory.getLogger(HttpAspect.class);
+
+    @Pointcut("execution(public * com.xieyunhai.controller.UserController.*(..))")
+    public void checkUser() {};
+
+
 }
