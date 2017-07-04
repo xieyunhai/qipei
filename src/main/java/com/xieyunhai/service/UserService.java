@@ -21,8 +21,8 @@ public interface UserService {
 
     /**
      * 保存用户 - 管理员用户使用
-     * @param user
-     * @return
+     * @param user User
+     * @return User
      */
     HttpResult<User> saveUser(User user);
 
@@ -34,23 +34,23 @@ public interface UserService {
 
     /**
      * 用户登陆 - 前端和后端共用
-     * @param username
-     * @param password
-     * @return
+     * @param username username
+     * @param password password
+     * @return User
      */
-    HttpResult<User> login(String username, String password);
+    HttpResult login(String username, String password);
 
     /**
      * 验证
-     * @param string
-     * @param type
-     * @return
+     * @param string string
+     * @param type type
+     * @return true or false
      */
     HttpResult<Boolean> checkValid(String string, FieldType type);
 
     /**
      * 验证用户的权限
-     * @param user user
+     * @param user User
      * @return success: true or false
      */
     HttpResult<Boolean> checkUserPrivilege(User user);

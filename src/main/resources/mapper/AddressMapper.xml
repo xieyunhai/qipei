@@ -16,7 +16,7 @@
         <result property="city" column="city"/>
         <result property="street" column="street"/>
         <result property="remarks" column="remarks"/>
-        <result property="status" column="status"/>
+        <result property="success" column="success"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>

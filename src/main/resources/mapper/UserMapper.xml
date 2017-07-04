@@ -19,7 +19,7 @@
         <result column="last_login_ip" property="lastLoginIp" />
         <result column="last_login_time" property="lastLoginTime" />
         <result column="remarks" property="remarks" />
-        <result column="status" property="status" />
+        <result column="success" property="success" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
     </resultMap>

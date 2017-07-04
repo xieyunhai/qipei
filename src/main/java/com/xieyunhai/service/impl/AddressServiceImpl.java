@@ -1,7 +1,7 @@
 package com.xieyunhai.service.impl;
 
 import com.xieyunhai.common.HttpResult;
-import com.xieyunhai.common.HttpResultCode;
+import com.xieyunhai.common.HttpResultEnum;
 import com.xieyunhai.entity.Address;
 import com.xieyunhai.mapper.AddressMapper;
 import com.xieyunhai.service.AddressService;
@@ -37,7 +37,7 @@ public class AddressServiceImpl implements AddressService {
         if (count > 0) {
             return HttpResultUtil.success(addressMapper.getAddressByPrimaryKey(address.getId()));
         } else {
-            return HttpResultUtil.error(HttpResultCode.SERVER_ERROR.getCode());
+            return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR.getCode());
         }
     }
 
@@ -47,7 +47,7 @@ public class AddressServiceImpl implements AddressService {
         if (count > 0) {
             return HttpResultUtil.success(addressMapper.getAddressByPrimaryKey(address.getId()));
         } else {
-            return HttpResultUtil.error(HttpResultCode.SERVER_ERROR.getCode());
+            return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR.getCode());
         }
     }
 
@@ -57,7 +57,7 @@ public class AddressServiceImpl implements AddressService {
         if (count > 0) {
             return HttpResultUtil.success();
         } else {
-            return HttpResultUtil.error(HttpResultCode.SERVER_ERROR.getCode());
+            return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR.getCode());
         }
     }
 
@@ -82,7 +82,7 @@ public class AddressServiceImpl implements AddressService {
         if (count > 0) {
             return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(address.getId(), userId));
         } else {
-            return HttpResultUtil.error(HttpResultCode.SERVER_ERROR.getCode());
+            return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR.getCode());
         }
     }
 
@@ -92,7 +92,7 @@ public class AddressServiceImpl implements AddressService {
         if (count > 0) {
             return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(address.getId(), userId));
         } else {
-            return HttpResultUtil.error(HttpResultCode.SERVER_ERROR.getCode());
+            return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR.getCode());
         }
     }
 
@@ -102,7 +102,7 @@ public class AddressServiceImpl implements AddressService {
         if (count > 0) {
             return HttpResultUtil.success();
         } else {
-            return HttpResultUtil.error(HttpResultCode.SERVER_ERROR.getCode());
+            return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR.getCode());
         }
     }
 }

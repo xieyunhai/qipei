@@ -19,6 +19,7 @@ public interface UserMapper extends BaseMapper<User> {
     List<User> listUsers();
 
     @InsertProvider(type = UserMapperProvider.class, method = "saveUser")
+    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     int saveUser(User user);
 
     @UpdateProvider(type = UserMapperProvider.class, method = "updateUserByPrimaryKeySelective")
@@ -26,4 +27,8 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Delete("DELETE FROM user WHERE id = #{id}")
     int removeUserByPrimaryKey(Integer id);
+
+    @Select("SELECT * FROM user WHERE username = #{username} AND password = #{password}")
+    @ResultMap(value = "com.xieyunhai.mapper.UserMapper.userResult")
+    User getUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 }

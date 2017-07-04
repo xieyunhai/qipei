@@ -83,6 +83,8 @@ public class UserMapperProvider {
                 if (user.getStatus() != null) {
                     VALUES("status", "#{status, jdbcType=TINYINT}");
                 }
+                VALUES("create_time", "now()");
+                VALUES("update_time", "now()");
             }
         }.toString();
     }
