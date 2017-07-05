@@ -41,4 +41,13 @@ public class BaseEntity {
     public void setRows(Integer rows) {
         this.rows = rows;
     }
+
+    @Override
+    public String toString() {
+        return "BaseEntity{" +
+                "id=" + id +
+                ", page=" + page +
+                ", rows=" + rows +
+                '}';
+    }
 }

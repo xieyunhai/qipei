@@ -1,9 +1,12 @@
 package com.xieyunhai.util;
 
+import com.google.common.collect.Lists;
 import org.springframework.util.StringUtils;
 
 import java.security.MessageDigest;
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 /**
  * @author admin
@@ -17,12 +20,14 @@ public class MD5Util {
      * @return 16 进制字符串
      */
     private static String byteArrayToHexString(byte[] bytes) {
-        StringBuilder stringBuilder = new StringBuilder();
+        List<Byte> byteList = Lists.newArrayList();
+        // todo 把 byte[] 转化为 Byte[]
         for (byte b : bytes) {
-            stringBuilder.append(byteToHexString(b));
+            byteList.add(b);
         }
-//        Stream.of(bytes).forEach(stringBuilder::append);
-        return stringBuilder.toString();
+        return byteList.stream()
+                .map(MD5Util::byteToHexString)
+                .collect(Collectors.joining());
     }
 
     /**
@@ -30,7 +35,7 @@ public class MD5Util {
      * @param b 字节
      * @return 数字或字符
      */
-    private static String byteToHexString(byte b) {
+    private static String byteToHexString(Byte b) {
         int n = b;
         if (n < 0) {
             n += 256;

@@ -55,10 +55,11 @@ public class HttpResultUtil {
      * @return fail: code, msg
      */
     public static HttpResult error(Integer errorCode) {
-        List<HttpResultEnum> resultCodes = Arrays.stream(HttpResultEnum.values())
+        HttpResultEnum resultCode = Arrays.stream(HttpResultEnum.values())
                 .filter(code -> code.getCode() == errorCode)
-                .collect(Collectors.toList());
-        return error(resultCodes.get(0).getCode(), resultCodes.get(0).getDesc());
+                .findFirst()
+                .get();
+        return error(resultCode.getCode(), resultCode.getDesc());
     }
 
     /**

@@ -13,10 +13,5 @@ public class QipeiApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(QipeiApplication.class, args);
-
-//        String[] list = new String[]{"a", "b", "c"};
-//        StringBuilder stringBuilder = new StringBuilder();
-//        Arrays.stream(list).forEach(stringBuilder::append);
-//        System.out.println(stringBuilder.toString());
     }
 }

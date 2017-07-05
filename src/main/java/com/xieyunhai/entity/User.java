@@ -2,8 +2,7 @@ package com.xieyunhai.entity;
 
 import java.util.Date;
 
-public class User {
-    private Integer id;
+public class User extends BaseEntity {
 
     private String username;
 
@@ -40,14 +39,6 @@ public class User {
     private Date createTime;
 
     private Date updateTime;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
@@ -191,5 +182,29 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", sex=" + sex +
+                ", avatar='" + avatar + '\'' +
+                ", email='" + email + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", cellphone='" + cellphone + '\'' +
+                ", checked=" + checked +
+                ", wxOpenId='" + wxOpenId + '\'' +
+                ", wxNickname='" + wxNickname + '\'' +
+                ", loginTimes=" + loginTimes +
+                ", lastLoginIp='" + lastLoginIp + '\'' +
+                ", lastLoginTime=" + lastLoginTime +
+                ", remarks='" + remarks + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * @author admin
@@ -23,7 +24,7 @@ public class ExceptionAspect {
     private final static Logger logger = LoggerFactory.getLogger(HttpAspect.class);
 
     @Pointcut("execution(public * com.xieyunhai.service.impl.*.*(..))")
-    public void handleException() {};
+    public void handleException() {}
 
     /* 执行顺序: around之前 >> before >> around之后 >> after >> afterReturn */
 
@@ -53,17 +54,14 @@ public class ExceptionAspect {
         String methodName = joinPoint.getSignature().getName();
         logger.warn(className + " 的 " + methodName + " 执行了!");
         Object[] args = joinPoint.getArgs();
-        StringBuilder log = new StringBuilder("入参为");
-//        Arrays.stream(args).forEach(log::append);
-
-        for (Object arg : args) {
-            log.append(arg + " ");
-        }
-        logger.warn(log.toString());
+        String log = Arrays.stream(args)
+                .map(Object::toString)
+                .collect(Collectors.joining(" "));
+        logger.warn("入参为: {}", log);
     }
 
     @After("handleException()")
-    public void after(JoinPoint joinPoint) {
+    public void after() {
         logger.info("After 被执行");
     }
 
