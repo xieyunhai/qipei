@@ -7,7 +7,7 @@ import java.util.List;
 import com.xieyunhai.mapper.provider.UserMapperProvider;
 import com.xieyunhai.util.BaseMapper;
 import org.apache.ibatis.annotations.*;
-
+@Mapper
 public interface UserMapper extends BaseMapper<User> {
 
     @SelectProvider(type = UserMapperProvider.class, method = "getUserByPrimaryKey")

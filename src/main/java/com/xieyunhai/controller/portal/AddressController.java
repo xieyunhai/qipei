@@ -20,19 +20,6 @@ public class AddressController {
     @Resource
     private AddressService addressService;
 
-    @GetMapping("/")
-    public HttpResult<List<Address>> listAddressesByUserId(Session session) {
-        // todo 通过 session 获得 userId
-
-        HttpResult<List<Address>> httpResult = addressService.listAddressesByUserId(1);
-        return httpResult;
-    }
-
-    @GetMapping("/{id}")
-    public HttpResult<Address> getAddressByPrimaryKeyAndUserId(@PathVariable("id") Integer id) {
-        return addressService.getAddressByPrimaryKeyAndUserId(id, 1);
-    }
-
     @PutMapping("/")
     public void saveAddress(Address address) {
          addressService.saveAddressByUserId(address, 1);

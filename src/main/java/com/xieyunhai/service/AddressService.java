@@ -47,7 +47,7 @@ public interface AddressService {
 
     HttpResult<List<Address>> listAddressesByUserId(Integer userId);
 
-    HttpResult<Address> getAddressByPrimaryKeyAndUserId(Integer id, Integer userId);
+    HttpResult<Address> getAddressByAddressIdAndUserId(Integer id, Integer userId);
 
     HttpResult<Address> saveAddressByUserId(Address address, Integer userId);
 

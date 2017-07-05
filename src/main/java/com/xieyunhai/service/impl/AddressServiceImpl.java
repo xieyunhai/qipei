@@ -70,7 +70,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public HttpResult<Address> getAddressByPrimaryKeyAndUserId(Integer id, Integer userId) {
+    public HttpResult<Address> getAddressByAddressIdAndUserId(Integer id, Integer userId) {
         return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(id, userId));
     }
 

@@ -7,7 +7,7 @@ package com.xieyunhai.common;
 public enum HttpResultEnum {
     UN_KNOW(-1, "未知错误"),
 
-    SUCCESS(0, "success"),
+    SUCCESS(0, "成功"),
     SUCCESS_ADD(10, "添加成功"),
     SUCCESS_UPDATE(20, "更新成功"),
     SUCCESS_SAVE(30, "保存成功"),
@@ -17,7 +17,7 @@ public enum HttpResultEnum {
     PERMISSION_DENIED(110, "权限不足"),
     ERROR_FIELD(120, "字段错误"),
 
-    FAIL(400, "fail"),
+    FAIL(400, "失败"),
     FAIL_ADD(410, "添加失败"),
     FAIL_UPDATE(420, "更新失败"),
     FAIL_SAVE(430, "保存失败"),
@@ -46,5 +46,13 @@ public enum HttpResultEnum {
 
     public String getDesc() {
         return desc;
+    }
+
+    @Override
+    public String toString() {
+        return "HttpResultEnum{" +
+                "code=" + code +
+                ", desc='" + desc + '\'' +
+                '}';
     }
 }
