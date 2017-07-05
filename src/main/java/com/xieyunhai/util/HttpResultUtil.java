@@ -4,6 +4,8 @@ import com.xieyunhai.common.HttpResult;
 import com.xieyunhai.common.HttpResultEnum;
 
 import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * @author noobit
@@ -53,11 +55,11 @@ public class HttpResultUtil {
      * @return fail: code, msg
      */
     public static <O> HttpResult<O> error(Integer errorCode) {
-        HttpResultEnum resultCode = Arrays.stream(HttpResultEnum.values())
-                .filter(code -> code.getCode() == errorCode)
+        HttpResultEnum resultEnum = Arrays.stream(HttpResultEnum.values())
+                .filter(httpResultEnum -> httpResultEnum.getCode() == errorCode)
                 .findFirst()
-                .get();
-        return error(resultCode.getCode(), resultCode.getDesc());
+                .orElse(HttpResultEnum.UN_KNOW);
+        return error(resultEnum.getCode(), resultEnum.getDesc());
     }
 
     /**
