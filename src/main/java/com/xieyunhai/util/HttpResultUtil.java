@@ -4,8 +4,6 @@ import com.xieyunhai.common.HttpResult;
 import com.xieyunhai.common.HttpResultEnum;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author noobit
@@ -17,7 +15,7 @@ public class HttpResultUtil {
      * 请求成功, 无数据返回
      * @return success: code, msg
      */
-    public static HttpResult success() {
+    public static <O> HttpResult<O> success() {
         return success(null);
     }
 
@@ -26,8 +24,8 @@ public class HttpResultUtil {
      * @param object 请求成功的数据
      * @return success: code, msg, data
      */
-    public static HttpResult success(Object object) {
-        HttpResult httpResult = new HttpResult();
+    public static <O> HttpResult<O> success(O object) {
+        HttpResult<O> httpResult = new HttpResult<>();
         httpResult.setSuccess(true);
         httpResult.setCode(HttpResultEnum.SUCCESS.getCode());
         httpResult.setMsg(HttpResultEnum.SUCCESS.getDesc());
@@ -41,8 +39,8 @@ public class HttpResultUtil {
      * @param errorMsg 自定义 msg
      * @return fail: code, msg
      */
-    public static HttpResult error(int errorCode, String errorMsg) {
-        HttpResult httpResult = new HttpResult();
+    public static <O> HttpResult<O> error(int errorCode, String errorMsg) {
+        HttpResult<O> httpResult = new HttpResult<>();
         httpResult.setSuccess(false);
         httpResult.setCode(errorCode);
         httpResult.setMsg(errorMsg);
@@ -54,7 +52,7 @@ public class HttpResultUtil {
      * @param errorCode 枚举包含的 code
      * @return fail: code, msg
      */
-    public static HttpResult error(Integer errorCode) {
+    public static <O> HttpResult<O> error(Integer errorCode) {
         HttpResultEnum resultCode = Arrays.stream(HttpResultEnum.values())
                 .filter(code -> code.getCode() == errorCode)
                 .findFirst()
@@ -65,9 +63,8 @@ public class HttpResultUtil {
     /**
      * 请求失败, 返回未知错误
      * @return fail: code, msg
-     * @param notExist
      */
-    public static HttpResult error(HttpResultEnum notExist) {
+    public static <O> HttpResult<O> error() {
         return error(HttpResultEnum.UN_KNOW.getCode(), HttpResultEnum.UN_KNOW.getDesc());
     }
 }

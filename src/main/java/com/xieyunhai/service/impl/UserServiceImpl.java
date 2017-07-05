@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
         if (row > 0) {
             return HttpResultUtil.success(HttpResultEnum.SUCCESS_DELETE);
         } else {
-            return HttpResultUtil.error(HttpResultEnum.NOT_EXIST);
+            return HttpResultUtil.error();
         }
     }
 
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         if (row > 0) {
             return HttpResultUtil.success(userMapper.getUserByPrimaryKey(user.getId()));
         } else {
-            return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR.getCode());
+            return HttpResultUtil.error();
         }
     }
 
