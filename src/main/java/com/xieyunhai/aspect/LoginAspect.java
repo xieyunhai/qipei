@@ -1,6 +1,8 @@
 package com.xieyunhai.aspect;
 
 import com.xieyunhai.common.*;
+import com.xieyunhai.exception.BaseException;
+import com.xieyunhai.exception.NeedLoginException;
 import com.xieyunhai.util.HttpResultUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -44,15 +46,14 @@ public class LoginAspect {
         } catch (Exception e) {
             logger.error("Exception: {}", e);
             HttpResult httpResult;
-            if (e instanceof BaseException) {
+            if (e instanceof NeedLoginException) {
                 NeedLoginException needLoginException = (NeedLoginException) e;
                 httpResult = HttpResultUtil.error(needLoginException.getCode(), needLoginException.getMessage());
             } else {
-                httpResult = HttpResultUtil.error(HttpResultEnum.UN_KNOW.getCode());
+                httpResult = HttpResultUtil.error(HttpResultEnum.UN_KNOW);
             }
             return httpResult;
         }
         return result;
     }
-
 }

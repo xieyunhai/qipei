@@ -36,9 +36,8 @@ public class AddressServiceImpl implements AddressService {
         int count = addressMapper.saveAddress(address);
         if (count > 0) {
             return HttpResultUtil.success(addressMapper.getAddressByPrimaryKey(address.getId()));
-        } else {
-            return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR.getCode());
         }
+        return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR);
     }
 
     @Override
@@ -46,9 +45,8 @@ public class AddressServiceImpl implements AddressService {
         int count = addressMapper.updateAddressByPrimaryKeySelective(address);
         if (count > 0) {
             return HttpResultUtil.success(addressMapper.getAddressByPrimaryKey(address.getId()));
-        } else {
-            return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR.getCode());
         }
+        return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR);
     }
 
     @Override
@@ -56,11 +54,9 @@ public class AddressServiceImpl implements AddressService {
         int count = addressMapper.removeAddressByPrimaryKey(id);
         if (count > 0) {
             return HttpResultUtil.success();
-        } else {
-            return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR.getCode());
         }
+        return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR);
     }
-
 
 
     @Override
@@ -76,14 +72,12 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public HttpResult<Address> saveAddressByUserId(Address address, Integer userId) {
-        // 判断用户是否横向越权
         address.setUserId(userId);
         int count = addressMapper.saveAddressByUserId(address);
         if (count > 0) {
             return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(address.getId(), userId));
-        } else {
-            return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR.getCode());
         }
+        return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR);
     }
 
     @Override
@@ -91,18 +85,14 @@ public class AddressServiceImpl implements AddressService {
         int count = addressMapper.updateAddressByPrimaryKeyAndUserIdSelective(address, userId);
         if (count > 0) {
             return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(address.getId(), userId));
-        } else {
-            return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR.getCode());
         }
+        return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR);
     }
 
     @Override
     public HttpResult removeAddressByPrimaryKeyAndUserId(Integer id, Integer userId) {
-        int count = addressMapper.removeAddressByPrimaryKeyAndUserId(id, userId);
-        if (count > 0) {
-            return HttpResultUtil.success();
-        } else {
-            return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR.getCode());
-        }
+
+        return null;
     }
+
 }

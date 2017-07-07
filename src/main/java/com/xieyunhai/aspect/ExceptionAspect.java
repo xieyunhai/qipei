@@ -1,6 +1,6 @@
 package com.xieyunhai.aspect;
 
-import com.xieyunhai.common.BaseException;
+import com.xieyunhai.exception.BaseException;
 import com.xieyunhai.common.HttpResult;
 import com.xieyunhai.common.HttpResultEnum;
 import com.xieyunhai.util.HttpResultUtil;
@@ -41,7 +41,7 @@ public class ExceptionAspect {
                 BaseException databaseException = (BaseException) e;
                 httpResult = HttpResultUtil.error(databaseException.getCode(), databaseException.getMessage());
             } else {
-                httpResult = HttpResultUtil.error(HttpResultEnum.UN_KNOW.getCode());
+                httpResult = HttpResultUtil.error(HttpResultEnum.UN_KNOW);
             }
             return httpResult;
         }

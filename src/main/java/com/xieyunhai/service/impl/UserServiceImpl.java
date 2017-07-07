@@ -13,7 +13,6 @@ import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author noobit
@@ -25,12 +24,13 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public HttpResult removeUserByPrimaryKey(Integer id) {
-        int row = userMapper.removeUserByPrimaryKey(id);
-        if (row > 0) {
-            return HttpResultUtil.success(null, HttpResultEnum.SUCCESS_DELETE.getCode());
-        }
-        return HttpResultUtil.success();
+    public HttpResult<List<User>> listUsers() {
+        return HttpResultUtil.success(userMapper.listUsers());
+    }
+
+    @Override
+    public HttpResult<User> getUserByPrimaryKey(Integer id) {
+        return HttpResultUtil.success(userMapper.getUserByPrimaryKey(id));
     }
 
     @Override
@@ -41,22 +41,58 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public HttpResult<User> getUserByPrimaryKey(Integer id) {
-        return HttpResultUtil.success(userMapper.getUserByPrimaryKey(id));
-    }
-
-    @Override
-    public HttpResult<List<User>> listUsers() {
-        return HttpResultUtil.success(userMapper.listUsers());
-    }
-
-    @Override
     public HttpResult<User> updateUserByPrimaryKeySelective(User user) {
         int row = userMapper.updateUserByPrimaryKeySelective(user);
         if (row > 0) {
-            return HttpResultUtil.success(userMapper.getUserByPrimaryKey(user.getId()), HttpResultEnum.SUCCESS_UPDATE.getCode());
+            return HttpResultUtil.success(userMapper.getUserByPrimaryKey(user.getId()), HttpResultEnum.SUCCESS_UPDATE);
         }
-        return HttpResultUtil.error(HttpResultEnum.NOT_EXIST.getCode());
+        return HttpResultUtil.error(HttpResultEnum.NOT_EXIST);
+    }
+
+    @Override
+    public HttpResult removeUserByPrimaryKey(Integer id) {
+        int row = userMapper.removeUserByPrimaryKey(id);
+        if (row > 0) {
+            return HttpResultUtil.success(HttpResultEnum.SUCCESS_DELETE);
+        }
+        return HttpResultUtil.success();
+    }
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public HttpResult<User> getUserByPrimaryKeyAndUserId(Integer id, Integer userId) {
+         return HttpResultUtil.success(userMapper.getUserByPrimaryKey(id));
+    }
+
+    @Override
+    public HttpResult<User> updateUserByPrimaryKeyAndUserIdSelective(User user, Integer userId) {
+        if (user.getId().intValue() != userId.intValue()) {
+            return HttpResultUtil.error(HttpResultEnum.PERMISSION_DENIED);
+        }
+        // 加密密码
+        user.setId(userId);
+        if (!ObjectUtils.isEmpty(user.getPassword())) {
+            user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
+        }
+        int row = userMapper.updateUserByPrimaryKeySelective(user);
+        if (row > 0) {
+            return HttpResultUtil.success(userMapper.getUserByPrimaryKey(user.getId()), HttpResultEnum.SUCCESS_UPDATE);
+        }
+        return HttpResultUtil.error(HttpResultEnum.NOT_EXIST);
+    }
+
+    @Override
+    public HttpResult removeUserByPrimaryKeyAndUserId(Integer id, Integer userId) {
+        return null;
     }
 
     @Override
@@ -66,23 +102,6 @@ public class UserServiceImpl implements UserService {
             return HttpResultUtil.error(HttpResultEnum.ERROR_FIELD.getCode(), "用户名或密码错误");
         }
         return HttpResultUtil.success(user);
-    }
-
-    @Override
-    public HttpResult<User> updateUserByPrimaryKeyAndUserIdSelective(User user, Integer userId) {
-        if (user.getId().intValue() != userId.intValue()) {
-            return HttpResultUtil.error(HttpResultEnum.PERMISSION_DENIED.getCode());
-        }
-        // 加密密码
-        user.setId(userId);
-        if (!ObjectUtils.isEmpty(user.getPassword())) {
-            user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
-        }
-        int row = userMapper.updateUserByPrimaryKeySelective(user);
-        if (row > 0) {
-            return HttpResultUtil.success(userMapper.getUserByPrimaryKey(user.getId()), HttpResultEnum.SUCCESS_UPDATE.getCode());
-        }
-        return HttpResultUtil.error(HttpResultEnum.NOT_EXIST.getCode());
     }
 
     @Override

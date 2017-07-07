@@ -26,8 +26,35 @@ public class UserController {
     private AddressService addressService;
 
     @GetMapping("/{id}")
-    public HttpResult<User> getUserByUserId(@PathVariable("id") Integer id) {
-        return userService.getUserByPrimaryKey(id);
+    public HttpResult<User> getUserByUserId(@PathVariable("id") Integer id, HttpSession session) {
+        User curUser = User.getUserBySession(session);
+        return userService.getUserByPrimaryKeyAndUserId(id, curUser.getId());
+    }
+
+    @DeleteMapping("/{id}")
+    public HttpResult removeUserByPrimaryKeyAndUserId(@PathVariable("id") Integer id, HttpSession session) {
+        User curUser = User.getUserBySession(session);
+        return userService.removeUserByPrimaryKeyAndUserId(id, curUser.getId());
+    }
+
+    @PostMapping("/{id}")
+    public HttpResult<User> updateUserByPrimaryKeyAndUserId(User user, HttpSession session) {
+        User curUser = User.getUserBySession(session);
+        return userService.updateUserByPrimaryKeyAndUserIdSelective(user, curUser.getId());
+    }
+
+    @GetMapping("/{userId}/address/{addressId}")
+    public HttpResult<Address> getAddressByPrimaryKeyAndUserId(
+            @PathVariable("addressId") Integer addressId,
+            HttpSession session) {
+        User curUser = User.getUserBySession(session);
+        return addressService.getAddressByAddressIdAndUserId(addressId, curUser.getId());
+    }
+
+    @GetMapping("/{userId}/address")
+    public HttpResult<List<Address>> listAddressesByUserId(HttpSession session) {
+        User curUser = User.getUserBySession(session);
+        return addressService.listAddressesByUserId(curUser.getId());
     }
 
     @PostMapping("/login")
@@ -51,27 +78,4 @@ public class UserController {
         return userService.saveUser(user);
     }
 
-    @DeleteMapping("/{userId}")
-    public HttpResult removeUserByPrimaryKeyAndUserId(HttpSession session, @PathVariable("userId") Integer userId) {
-        User curUser = (User) session.getAttribute(Const.CURRENT_USER);
-        return userService.removeUserByPrimaryKey(userId);
-    }
-
-    @PostMapping("/{userId}")
-    public HttpResult<User> updateUserByPrimaryKeyAndUserId(HttpSession session, User user) {
-        User curUser = (User) session.getAttribute(Const.CURRENT_USER);
-        return userService.updateUserByPrimaryKeyAndUserIdSelective(user, curUser.getId());
-    }
-
-    @GetMapping("/{userId}/address/{addressId}")
-    public HttpResult<Address> getAddressByPrimaryKeyAndUserId(
-            @PathVariable("addressId") Integer addressId,
-            @PathVariable("userId") Integer userId) {
-        return addressService.getAddressByAddressIdAndUserId(addressId, userId);
-    }
-
-    @GetMapping("/{userId}/address")
-    public HttpResult<List<Address>> listAddressesByUserId(@PathVariable("userId") Integer userId) {
-        return addressService.listAddressesByUserId(userId);
-    }
 }

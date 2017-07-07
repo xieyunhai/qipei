@@ -1,4 +1,6 @@
-package com.xieyunhai.common;
+package com.xieyunhai.exception;
+
+import com.xieyunhai.common.HttpResultEnum;
 
 /**
  * @author admin

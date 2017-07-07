@@ -1,5 +1,8 @@
 package com.xieyunhai.entity;
 
+import com.xieyunhai.common.Const;
+
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 public class User extends BaseEntity {
@@ -39,6 +42,10 @@ public class User extends BaseEntity {
     private Date createTime;
 
     private Date updateTime;
+
+    public static User getUserBySession(HttpSession session) {
+        return (User) session.getAttribute(Const.CURRENT_USER);
+    }
 
     public String getUsername() {
         return username;
