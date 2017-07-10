@@ -33,7 +33,7 @@
         <javaClientGenerator targetPackage="com.xieyunhai.mapper" targetProject="src/main/java"
                              type="ANNOTATEDMAPPER"/>
 
-        <table tableName="user">
+        <table tableName="customer">
             <!--mysql 配置-->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>

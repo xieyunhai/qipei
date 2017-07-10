@@ -1,6 +1,7 @@
 package com.xieyunhai.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author admin
@@ -10,11 +11,12 @@ public class BaseEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    protected Integer id;
+    private Date createTime;
+    private Date updateTime;
 
     @Transient
     private Integer page = 1;
-
     @Transient
     private Integer rows = 10;
 
@@ -42,12 +44,19 @@ public class BaseEntity {
         this.rows = rows;
     }
 
-    @Override
-    public String toString() {
-        return "BaseEntity{" +
-                "id=" + id +
-                ", page=" + page +
-                ", rows=" + rows +
-                '}';
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

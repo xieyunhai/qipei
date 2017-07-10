@@ -25,8 +25,6 @@ public class Address extends BaseEntity {
     private String street;
     private String remarks;
     private Short status;
-    private Date createTime;
-    private Date updateTime;
 
 
     public Integer getUserId() {
@@ -133,19 +131,23 @@ public class Address extends BaseEntity {
         this.status = status;
     }
 
+    @Override
     public Date getCreateTime() {
-        return createTime;
+        return super.getCreateTime();
     }
 
+    @Override
     public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+        super.setCreateTime(createTime);
     }
 
+    @Override
     public Date getUpdateTime() {
-        return updateTime;
+        return super.getUpdateTime();
     }
 
+    @Override
     public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+        super.setUpdateTime(updateTime);
     }
 }
