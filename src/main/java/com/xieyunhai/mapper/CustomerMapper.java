@@ -77,6 +77,11 @@ public interface CustomerMapper {
     })
     int updateByPrimaryKey(Customer record);
 
-    @Select("SELECT * FROM customer ")
+    @Select("SELECT * FROM customer")
+    @ResultMap(value = "com.xieyunhai.mapper.CustomerMapper.customerResult")
     Customer getCustomerByPrimaryKey(Integer id);
+
+    @InsertProvider(type = CustomerMapperProvider.class, method = "saveCustomer")
+    int saveCustomer(Customer customer);
+
 }

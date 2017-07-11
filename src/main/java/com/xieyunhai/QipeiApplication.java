@@ -3,11 +3,11 @@ package com.xieyunhai;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
+@EnableTransactionManagement
 @MapperScan(basePackages = "com.xieyunhai.mapper")
 public class QipeiApplication {
 

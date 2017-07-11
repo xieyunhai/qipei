@@ -36,8 +36,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public HttpResult<User> saveUser(User user) {
         user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
-        userMapper.saveUser(user);
-        return HttpResultUtil.success(userMapper.getUserByPrimaryKey(user.getId()));
+        int row = userMapper.saveUser(user);
+        if (row > 0) {
+            return HttpResultUtil.success(userMapper.getUserByPrimaryKey(user.getId()));
+        }
+        return HttpResultUtil.error(HttpResultEnum.ERROR_DATABASE);
     }
 
     @Override

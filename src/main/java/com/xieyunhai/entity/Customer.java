@@ -1,10 +1,7 @@
 package com.xieyunhai.entity;
 
-import java.util.Date;
-
 public class Customer extends User {
 
-    private Integer userId;
     private Integer managerId;
     private Integer points;
     private String invoiceTitle;
@@ -12,14 +9,6 @@ public class Customer extends User {
     private Short userSource;
     private Short userLevel;
     private Integer referee;
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 
     public Integer getManagerId() {
         return managerId;
@@ -75,26 +64,6 @@ public class Customer extends User {
 
     public void setReferee(Integer referee) {
         this.referee = referee;
-    }
-
-    @Override
-    public Date getCreateTime() {
-        return super.getCreateTime();
-    }
-
-    @Override
-    public void setCreateTime(Date createTime) {
-        super.setCreateTime(createTime);
-    }
-
-    @Override
-    public Date getUpdateTime() {
-        return super.getUpdateTime();
-    }
-
-    @Override
-    public void setUpdateTime(Date updateTime) {
-        super.setUpdateTime(updateTime);
     }
 
 }

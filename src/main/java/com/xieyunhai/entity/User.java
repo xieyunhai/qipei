@@ -23,6 +23,8 @@ public class User extends BaseEntity {
     private Date lastLoginTime;
     private String remarks;
     private Short status;
+    private Short classKey;
+
 
     public static User getUserBySession(HttpSession session) {
         return (User) session.getAttribute(Const.CURRENT_USER);
@@ -156,23 +158,11 @@ public class User extends BaseEntity {
         this.status = status;
     }
 
-    @Override
-    public Date getCreateTime() {
-        return super.getCreateTime();
+    public Short getClassKey() {
+        return classKey;
     }
 
-    @Override
-    public void setCreateTime(Date createTime) {
-        super.setCreateTime(createTime);
-    }
-
-    @Override
-    public Date getUpdateTime() {
-        return super.getUpdateTime();
-    }
-
-    @Override
-    public void setUpdateTime(Date updateTime) {
-        super.setUpdateTime(updateTime);
+    public void setClassKey(Short classKey) {
+        this.classKey = classKey;
     }
 }
