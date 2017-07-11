@@ -55,7 +55,7 @@ public class PrivilegeAspect {
 
     @Around("handlePrivilege()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        Object result = null;
+        Object result;
         try {
             result = proceedingJoinPoint.proceed();
         } catch (Exception e) {

@@ -33,16 +33,16 @@ public class CustomerServiceImpl implements CustomerService {
     public HttpResult<Customer> saveCustomer(Customer customer) {
         customer.setPassword(MD5Util.MD5EncodeUtf8(customer.getPassword()));
         customer.setClassKey((short) 1);
-        int row = userMapper.saveUser(customer);
-        if (row < 0) {
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            return HttpResultUtil.error();
-        }
-        row = customerMapper.saveCustomer(customer);
-        if (row > 0) {
-            return HttpResultUtil.success(customerMapper.getCustomerByPrimaryKey(customer.getId()));
-        }
-        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-        return HttpResultUtil.error();
+        userMapper.saveUser(customer);
+        customerMapper.saveCustomer(customer);
+        return HttpResultUtil.success(customerMapper.getCustomerByPrimaryKey(customer.getId()));
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor =
+            TransactionException.class)
+    public HttpResult removeCustomer(Integer id) {
+        customerMapper.removeCustomerByPrimaryKey(id);
+        return HttpResultUtil.success();
     }
 }

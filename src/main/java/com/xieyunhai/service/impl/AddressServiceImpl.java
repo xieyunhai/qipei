@@ -42,11 +42,8 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public HttpResult<Address> updateAddressByPrimaryKey(Address address) {
-        int count = addressMapper.updateAddressByPrimaryKeySelective(address);
-        if (count > 0) {
-            return HttpResultUtil.success(addressMapper.getAddressByPrimaryKey(address.getId()));
-        }
-        return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR);
+        addressMapper.updateAddressByPrimaryKeySelective(address);
+        return HttpResultUtil.success(addressMapper.getAddressByPrimaryKey(address.getId()));
     }
 
     @Override

@@ -17,9 +17,6 @@ import static org.apache.ibatis.jdbc.SqlBuilder.VALUES;
  */
 @Component
 public class CustomerMapperProvider {
-    @Resource
-    private UserMapper userMapper;
-
     public String saveCustomer(Customer customer) {
         return new SQL() {
             {
@@ -40,7 +37,7 @@ public class CustomerMapperProvider {
                     VALUES("shop_name", "#{shopName, jdbcType=VARCHAR}");
                 }
                 if (customer.getUserSource() != null) {
-                    VALUES("userource", "#{userSource, jdbcType=TINYINT}");
+                    VALUES("user_source", "#{userSource, jdbcType=TINYINT}");
                 }
                 if (customer.getUserLevel() != null) {
                     VALUES("user_level", "#{userLevel, jdbcType=TINYINT}");
@@ -52,5 +49,9 @@ public class CustomerMapperProvider {
                 VALUES("update_time", "now()");
             }
         }.toString();
+    }
+
+    public String updateByPrimaryKey(Customer customer) {
+        return null;
     }
 }

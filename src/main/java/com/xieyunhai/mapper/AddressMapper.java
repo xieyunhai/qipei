@@ -1,6 +1,5 @@
 package com.xieyunhai.mapper;
 
-import com.xieyunhai.common.HttpResult;
 import com.xieyunhai.entity.Address;
 import com.xieyunhai.mapper.provider.AddressMapperProvider;
 import com.xieyunhai.util.BaseMapper;

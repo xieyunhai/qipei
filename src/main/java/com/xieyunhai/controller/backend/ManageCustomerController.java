@@ -5,9 +5,7 @@ import com.xieyunhai.common.HttpResult;
 import com.xieyunhai.entity.Customer;
 import com.xieyunhai.entity.User;
 import com.xieyunhai.service.CustomerService;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -27,5 +25,8 @@ public class ManageCustomerController {
         return customerService.saveCustomer(customer);
     }
 
-
+    @DeleteMapping("/{id}")
+    public HttpResult deleteCustomer(@PathVariable("id") Integer id) {
+        return customerService.removeCustomer(id);
+    }
 }

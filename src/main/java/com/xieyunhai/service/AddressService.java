@@ -36,7 +36,7 @@ public interface AddressService {
      * @param address address
      * @return success: address, fail: error
      */
-    HttpResult updateAddressByPrimaryKey(Address address);
+    HttpResult<Address> updateAddressByPrimaryKey(Address address);
 
     /**
      * 删除地址
