@@ -36,29 +36,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public HttpResult<User> saveUser(User user) {
         user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
-        int row = userMapper.saveUser(user);
-        if (row > 0) {
-            return HttpResultUtil.success(userMapper.getUserByPrimaryKey(user.getId()));
-        }
-        return HttpResultUtil.error(HttpResultEnum.ERROR_DATABASE);
+        userMapper.saveUser(user);
+        return HttpResultUtil.success(userMapper.getUserByPrimaryKey(user.getId()));
     }
 
     @Override
     public HttpResult<User> updateUserByPrimaryKeySelective(User user) {
-        int row = userMapper.updateUserByPrimaryKeySelective(user);
-        if (row > 0) {
-            return HttpResultUtil.success(userMapper.getUserByPrimaryKey(user.getId()), HttpResultEnum.SUCCESS_UPDATE);
-        }
-        return HttpResultUtil.error(HttpResultEnum.NOT_EXIST);
+        userMapper.updateUserByPrimaryKeySelective(user);
+        return HttpResultUtil.success(userMapper.getUserByPrimaryKey(user.getId()), HttpResultEnum.SUCCESS_UPDATE);
     }
 
     @Override
     public HttpResult removeUserByPrimaryKey(Integer id) {
-        int row = userMapper.removeUserByPrimaryKey(id);
-        if (row > 0) {
-            return HttpResultUtil.success(HttpResultEnum.SUCCESS_DELETE);
-        }
-        return HttpResultUtil.success();
+        userMapper.removeUserByPrimaryKey(id);
+        return HttpResultUtil.success(HttpResultEnum.SUCCESS_DELETE);
     }
 
 
@@ -86,11 +77,8 @@ public class UserServiceImpl implements UserService {
         if (!ObjectUtils.isEmpty(user.getPassword())) {
             user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
         }
-        int row = userMapper.updateUserByPrimaryKeySelective(user);
-        if (row > 0) {
-            return HttpResultUtil.success(userMapper.getUserByPrimaryKey(user.getId()), HttpResultEnum.SUCCESS_UPDATE);
-        }
-        return HttpResultUtil.error(HttpResultEnum.NOT_EXIST);
+        userMapper.updateUserByPrimaryKeySelective(user);
+        return HttpResultUtil.success(userMapper.getUserByPrimaryKey(user.getId()), HttpResultEnum.SUCCESS_UPDATE);
     }
 
     @Override

@@ -19,14 +19,25 @@ public class ManageCustomerController {
     @Resource
     private CustomerService customerService;
 
+    @GetMapping("/{id}")
+    public HttpResult<User> getCustomerById(@PathVariable("id") Integer id) {
+        return customerService.getCustomerByPrimaryKey(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public HttpResult deleteCustomerById(@PathVariable("id") Integer id) {
+        return customerService.removeCustomerByPrimaryKey(id);
+    }
+
+    @PostMapping("/{id}")
+    public HttpResult<User> updateCustomerById(Customer customer, @PathVariable("id") Integer id) {
+        customer.setId(id);
+        return customerService.updateCustomerSelective(customer);
+    }
+
     @PutMapping("/register")
     public HttpResult<Customer> register(Customer customer) {
         // todo 校验数据的合法性
         return customerService.saveCustomer(customer);
-    }
-
-    @DeleteMapping("/{id}")
-    public HttpResult deleteCustomer(@PathVariable("id") Integer id) {
-        return customerService.removeCustomer(id);
     }
 }

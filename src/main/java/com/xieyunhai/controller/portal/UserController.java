@@ -57,6 +57,27 @@ public class UserController {
         return addressService.listAddressesByUserId(curUser.getId());
     }
 
+    @PutMapping("/{userId}/address")
+    public void saveAddress(Address address, HttpSession session) {
+        User curUser = (User) session.getAttribute(Const.CURRENT_USER);
+        addressService.saveAddressByUserId(address, curUser.getId());
+    }
+
+    @PostMapping("/{addressId}")
+    public HttpResult<Address> updateAddressByPrimaryKeyAndUserId(
+            Address address, @PathVariable("addressId") Integer addressId, HttpSession session) {
+        address.setId(addressId);
+        User curUser = (User) session.getAttribute(Const.CURRENT_USER);
+        return addressService.updateAddressByPrimaryKeyAndUserId(address, curUser.getId());
+    }
+
+    @DeleteMapping("/{addressId}")
+    public HttpResult removeAddressByPrimaryKeyAndUserId(@PathVariable("addressId") Integer addressId, HttpSession session) {
+        User curUser = (User) session.getAttribute(Const.CURRENT_USER);
+        return addressService.removeAddressByPrimaryKeyAndUserId(addressId, curUser.getId());
+    }
+
+
     @PostMapping("/login")
     public HttpResult login(String username, String password, HttpSession session) {
         HttpResult httpResult = userService.login(username, password);

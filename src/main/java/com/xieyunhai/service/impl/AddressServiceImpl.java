@@ -33,11 +33,9 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public HttpResult<Address> saveAddress(Address address) {
-        int count = addressMapper.saveAddress(address);
-        if (count > 0) {
-            return HttpResultUtil.success(addressMapper.getAddressByPrimaryKey(address.getId()));
-        }
-        return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR);
+        addressMapper.saveAddress(address);
+        return HttpResultUtil.success(addressMapper.getAddressByPrimaryKey(address.getId()));
+
     }
 
     @Override
@@ -48,11 +46,8 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public HttpResult removeAddressByPrimaryKey(Integer id) {
-        int count = addressMapper.removeAddressByPrimaryKey(id);
-        if (count > 0) {
-            return HttpResultUtil.success();
-        }
-        return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR);
+        addressMapper.removeAddressByPrimaryKey(id);
+        return HttpResultUtil.success(HttpResultEnum.SUCCESS_DELETE);
     }
 
 
@@ -70,26 +65,20 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public HttpResult<Address> saveAddressByUserId(Address address, Integer userId) {
         address.setUserId(userId);
-        int count = addressMapper.saveAddressByUserId(address);
-        if (count > 0) {
-            return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(address.getId(), userId));
-        }
-        return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR);
+        addressMapper.saveAddressByUserId(address);
+        return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(address.getId(), userId));
     }
 
     @Override
     public HttpResult<Address> updateAddressByPrimaryKeyAndUserId(Address address, Integer userId) {
-        int count = addressMapper.updateAddressByPrimaryKeyAndUserIdSelective(address, userId);
-        if (count > 0) {
-            return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(address.getId(), userId));
-        }
-        return HttpResultUtil.error(HttpResultEnum.SERVER_ERROR);
+        addressMapper.updateAddressByPrimaryKeyAndUserIdSelective(address, userId);
+        return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(address.getId(), userId));
     }
 
     @Override
     public HttpResult removeAddressByPrimaryKeyAndUserId(Integer id, Integer userId) {
-
-        return null;
+        addressMapper.removeAddressByPrimaryKeyAndUserId(id, userId);
+        return HttpResultUtil.success(HttpResultEnum.SUCCESS_DELETE);
     }
 
 }

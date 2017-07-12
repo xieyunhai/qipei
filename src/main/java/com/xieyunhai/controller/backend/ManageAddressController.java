@@ -29,18 +29,18 @@ public class ManageAddressController {
     }
 
     @PostMapping("/{id}")
-    public HttpResult<Address> updateAddressByPrimaryKey(Address address, @PathVariable("id") int id) {
+    public HttpResult<Address> updateAddress(Address address, @PathVariable("id") int id) {
         address.setId(id);
         return addressService.updateAddressByPrimaryKey(address);
     }
 
     @PutMapping("/")
-    public HttpResult<Address> saveAddress(Address address) {
+    public HttpResult<Address> addAddress(Address address) {
         return addressService.saveAddress(address);
     }
 
     @DeleteMapping("/{id}")
-    public HttpResult removeAddressByPrimaryKey(@PathVariable("id") Integer id) {
+    public HttpResult deleteAddress(@PathVariable("id") Integer id) {
         return addressService.removeAddressByPrimaryKey(id);
     }
 

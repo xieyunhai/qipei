@@ -1,7 +1,9 @@
 package com.xieyunhai.service.impl;
 
 import com.xieyunhai.common.HttpResult;
+import com.xieyunhai.common.HttpResultEnum;
 import com.xieyunhai.entity.Customer;
+import com.xieyunhai.entity.User;
 import com.xieyunhai.mapper.CustomerMapper;
 import com.xieyunhai.mapper.UserMapper;
 import com.xieyunhai.service.CustomerService;
@@ -44,5 +46,26 @@ public class CustomerServiceImpl implements CustomerService {
     public HttpResult removeCustomer(Integer id) {
         customerMapper.removeCustomerByPrimaryKey(id);
         return HttpResultUtil.success();
+    }
+
+    @Override
+    public HttpResult<User> getCustomerByPrimaryKey(Integer id) {
+        return HttpResultUtil.success(customerMapper.getCustomerByPrimaryKey(id));
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor =
+            TransactionException.class)
+    public HttpResult removeCustomerByPrimaryKey(Integer id) {
+        customerMapper.removeCustomerByPrimaryKey(id);
+        return HttpResultUtil.success(HttpResultEnum.SUCCESS_DELETE);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor =
+            TransactionException.class)
+    public HttpResult<User> updateCustomerSelective(Customer customer) {
+        customerMapper.updateCustomerSelective(customer);
+        return getCustomerByPrimaryKey(customer.getId());
     }
 }

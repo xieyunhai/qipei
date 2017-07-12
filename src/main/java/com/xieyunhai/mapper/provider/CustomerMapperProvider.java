@@ -51,7 +51,90 @@ public class CustomerMapperProvider {
         }.toString();
     }
 
-    public String updateByPrimaryKey(Customer customer) {
-        return null;
+    public String updateCustomerSelective(Customer params) {
+        return new SQL() {
+            {
+                // todo 多表更新
+//                SELECT("*");
+//                FROM("customer customer");
+//                SELECT("*");
+//                FROM("user user");
+//                LEFT_OUTER_JOIN("user user ON customer.id = user.id");
+                UPDATE("customer customer, user user");
+                if (params.getManagerId() != null) {
+                    SET("manager_id = #{managerId, jdbcType=VARCHAR}");
+                }
+                if (params.getPoints() != null) {
+                    SET("points = #{points, jdbcType=INTEGER}");
+                }
+                if (params.getInvoiceTitle() != null) {
+                    SET("invoice_title = #{invoiceTitle, jdbcType=VARCHAR}");
+                }
+                if (params.getShopName() != null) {
+                    SET("shop_name = #{shopName, jdbcType=VARCHAR}");
+                }
+                if (params.getUserSource() != null) {
+                    SET("user_source = #{userSource, jdbcType=TINYINT}");
+                }
+                if (params.getUserLevel() != null) {
+                    SET("user_level = #{userLevel, jdbcType=TINYINT}");
+                }
+                if (params.getReferee() != null) {
+                    SET("referee = #{referee, jdbcType=INTEGER}");
+                }
+                if (params.getUsername() != null) {
+                    SET("username = #{username, jdbcType=VARCHAR}");
+                }
+                if (params.getPassword() != null) {
+                    SET("password = #{password, jdbcType=VARCHAR}");
+                }
+                if (params.getName() != null) {
+                    SET("name = #{name, jdbcType=VARCHAR}");
+                }
+                if (params.getSex() != null) {
+                    SET("sex = #{sex, jdbcType=TINYINT}");
+                }
+                if (params.getAvatar() != null) {
+                    SET("avatar = #{avatar, jdbcType=VARCHAR}");
+                }
+                if (params.getEmail() != null) {
+                    SET("email = #{email, jdbcType=VARCHAR}");
+                }
+                if (params.getTelephone() != null) {
+                    SET("telephone = #{telephone, jdbcType=VARCHAR}");
+                }
+                if (params.getCellphone() != null) {
+                    SET("cellphone = #{cellphone, jdbcType=VARCHAR}");
+                }
+                if (params.getChecked() != null) {
+                    SET("checked = #{checked, jdbcType=TINYINT}");
+                }
+                if (params.getWxOpenId() != null) {
+                    SET("wx_open_id = #{wxOpenId, jdbcType=VARCHAR}");
+                }
+                if (params.getWxNickname() != null) {
+                    SET("wx_nickname = #{wxNickname, jdbcType=VARCHAR}");
+                }
+                if (params.getLoginTimes() != null) {
+                    SET("login_times = #{loginTimes, jdbcType=INTEGER}");
+                }
+                if (params.getLastLoginIp() != null) {
+                    SET("last_login_ip = #{lastLoginIp, jdbcType=VARCHAR}");
+                }
+                if (params.getLastLoginTime() != null) {
+                    SET("last_login_time = #{lastLoginTime, jdbcType=TIMESTAMP}");
+                }
+                if (params.getRemarks() != null) {
+                    SET("remarks = #{remarks, jdbcType=VARCHAR}");
+                }
+                if (params.getStatus() != null) {
+                    SET("status = #{status, jdbcType=TINYINT}");
+                }
+                SET("user.update_time = now()");
+                SET("customer.update_time = now()");
+                WHERE("customer.id = user.id");
+                WHERE("customer.id = #{id}");
+            }
+        }.toString();
     }
 }

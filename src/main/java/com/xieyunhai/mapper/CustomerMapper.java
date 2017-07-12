@@ -25,8 +25,8 @@ public interface CustomerMapper {
     @InsertProvider(type = CustomerMapperProvider.class, method = "saveCustomer")
     void saveCustomer(Customer customer);
 
-    @UpdateProvider(type = CustomerMapperProvider.class, method = "updateByPrimaryKey")
-    void updateByPrimaryKey(Customer customer);
+    @UpdateProvider(type = CustomerMapperProvider.class, method = "updateCustomerSelective")
+    void updateCustomerSelective(Customer customer);
 
     @Delete({
             "delete customer, user from customer LEFT JOIN user",
@@ -34,4 +34,5 @@ public interface CustomerMapper {
             "WHERE customer.id = #{id, jdbcType=INTEGER}"
     })
     void removeCustomerByPrimaryKey(Integer id);
+
 }
