@@ -9,7 +9,7 @@ import org.apache.ibatis.jdbc.SQL;
  * @since 2017/6/30 9:49
  */
 public class AddressMapperProvider {
-    public String updateAddressByPrimaryKeySelective(Address address) {
+    public String updateAddressSelective(Address address) {
         return new SQL() {
             {
                 UPDATE("address");
@@ -55,7 +55,7 @@ public class AddressMapperProvider {
         }.toString();
     }
 
-    public String updateAddressByPrimaryKeyAndUserIdSelective(@Param("address") Address address, @Param("userId") Integer
+    public String updateAddressByUserIdSelective(@Param("address") Address address, @Param("userId") Integer
             userId) {
         return new SQL() {
             {

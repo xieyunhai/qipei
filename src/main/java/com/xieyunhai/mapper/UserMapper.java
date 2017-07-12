@@ -20,10 +20,10 @@ public interface UserMapper extends BaseMapper<User> {
 
     @InsertProvider(type = UserMapperProvider.class, method = "saveUser")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
-    void saveUser(User user);
+    void saveUserByUser(User user);
 
     @UpdateProvider(type = UserMapperProvider.class, method = "updateUserByPrimaryKeySelective")
-    void updateUserByPrimaryKeySelective(User user);
+    void updateUserUserSelective(User user);
 
     @Delete("DELETE FROM user WHERE id = #{id}")
     void removeUserByPrimaryKey(Integer id);

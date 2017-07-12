@@ -8,6 +8,7 @@ import com.xieyunhai.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author admin
@@ -19,8 +20,13 @@ public class ManageCustomerController {
     @Resource
     private CustomerService customerService;
 
+    @GetMapping("")
+    public HttpResult<List<Customer>> listCustomers() {
+        return customerService.listCustomers();
+    }
+
     @GetMapping("/{id}")
-    public HttpResult<User> getCustomerById(@PathVariable("id") Integer id) {
+    public HttpResult<Customer> getCustomerById(@PathVariable("id") Integer id) {
         return customerService.getCustomerByPrimaryKey(id);
     }
 
@@ -30,7 +36,7 @@ public class ManageCustomerController {
     }
 
     @PostMapping("/{id}")
-    public HttpResult<User> updateCustomerById(Customer customer, @PathVariable("id") Integer id) {
+    public HttpResult<Customer> updateCustomerById(Customer customer, @PathVariable("id") Integer id) {
         customer.setId(id);
         return customerService.updateCustomerSelective(customer);
     }

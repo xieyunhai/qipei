@@ -3,9 +3,10 @@ package com.xieyunhai.controller.portal;
 import com.xieyunhai.common.Const;
 import com.xieyunhai.common.HttpResult;
 import com.xieyunhai.entity.Address;
+import com.xieyunhai.entity.Customer;
 import com.xieyunhai.entity.User;
 import com.xieyunhai.service.AddressService;
-import com.xieyunhai.service.UserService;
+import com.xieyunhai.service.CustomerService;
 import com.xieyunhai.util.HttpResultUtil;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,29 +19,30 @@ import java.util.List;
  * @date 17-7-1 上午11:22
  */
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/customer")
+public class CustomerController {
     @Resource
-    private UserService userService;
+    private CustomerService customerService;
     @Resource
     private AddressService addressService;
 
     @GetMapping("/{id}")
-    public HttpResult<User> getUserByUserId(@PathVariable("id") Integer id, HttpSession session) {
-        User curUser = User.getUserBySession(session);
-        return userService.getUserByPrimaryKeyAndUserId(id, curUser.getId());
+    public HttpResult<Customer> getUserByUserId(@PathVariable("id") Integer id, HttpSession session) {
+        User user = User.getUserBySession(session);
+        return customerService.getCustomerByPrimaryKeyAndUserId(id, user.getId());
+    }
+
+    @PostMapping("/{id}")
+    public HttpResult<Customer> updateUserByPrimaryKeyAndUserId(@PathVariable("id") Integer id, Customer customer, HttpSession session) {
+        User user = User.getUserBySession(session);
+        customer.setId(id);
+        return customerService.updateCustomerByCustomerAndUserIdSelective(customer, user.getId());
     }
 
     @DeleteMapping("/{id}")
     public HttpResult removeUserByPrimaryKeyAndUserId(@PathVariable("id") Integer id, HttpSession session) {
-        User curUser = User.getUserBySession(session);
-        return userService.removeUserByPrimaryKeyAndUserId(id, curUser.getId());
-    }
-
-    @PostMapping("/{id}")
-    public HttpResult<User> updateUserByPrimaryKeyAndUserId(User user, HttpSession session) {
-        User curUser = User.getUserBySession(session);
-        return userService.updateUserByPrimaryKeyAndUserIdSelective(user, curUser.getId());
+        User user = User.getUserBySession(session);
+        return customerService.removeCustomerByPrimaryKeyAndUserId(id, user.getId());
     }
 
     @GetMapping("/{userId}/address/{addressId}")
@@ -63,15 +65,15 @@ public class UserController {
         addressService.saveAddressByUserId(address, curUser.getId());
     }
 
-    @PostMapping("/{addressId}")
-    public HttpResult<Address> updateAddressByPrimaryKeyAndUserId(
+    @PostMapping("/{userId}/address/{addressId}")
+    public HttpResult<Address> updateAddressByAddressAndUserId(
             Address address, @PathVariable("addressId") Integer addressId, HttpSession session) {
         address.setId(addressId);
         User curUser = (User) session.getAttribute(Const.CURRENT_USER);
         return addressService.updateAddressByPrimaryKeyAndUserId(address, curUser.getId());
     }
 
-    @DeleteMapping("/{addressId}")
+    @DeleteMapping("/{userId}/address/{addressId}")
     public HttpResult removeAddressByPrimaryKeyAndUserId(@PathVariable("addressId") Integer addressId, HttpSession session) {
         User curUser = (User) session.getAttribute(Const.CURRENT_USER);
         return addressService.removeAddressByPrimaryKeyAndUserId(addressId, curUser.getId());
@@ -80,7 +82,7 @@ public class UserController {
 
     @PostMapping("/login")
     public HttpResult login(String username, String password, HttpSession session) {
-        HttpResult httpResult = userService.login(username, password);
+        HttpResult httpResult = customerService.login(username, password);
         if (httpResult.getSuccess()) {
             session.setAttribute(Const.CURRENT_USER, httpResult.getData());
         }
@@ -94,9 +96,9 @@ public class UserController {
     }
 
     @PutMapping("/register")
-    public HttpResult<User> register(User user) {
+    public HttpResult<Customer> register(Customer customer) {
         // todo 校验数据的合法性
-        return userService.saveUser(user);
+        return customerService.saveUser(customer);
     }
 
 }

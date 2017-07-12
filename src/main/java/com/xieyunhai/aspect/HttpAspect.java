@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class HttpAspect {
     private final static Logger logger = LoggerFactory.getLogger(HttpAspect.class);
 
-    @Pointcut("execution(public * com.xieyunhai.controller.backend.ManageUserController.*(..))")
+    @Pointcut("execution(public * com.xieyunhai.controller.backend.*.*(..))")
     public void checkUser() {};
 
 

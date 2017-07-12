@@ -48,8 +48,8 @@ public interface AddressMapper extends BaseMapper<Address> {
      * 选择性更新地址内容 - 管理员用户调用
      * @param address address
      */
-    @UpdateProvider(type = AddressMapperProvider.class, method = "updateAddressByPrimaryKeySelective")
-    void updateAddressByPrimaryKeySelective(Address address);
+    @UpdateProvider(type = AddressMapperProvider.class, method = "updateAddressSelective")
+    void updateAddressSelective(Address address);
 
     /**
      * 删除地址 - 管理员用户调用
@@ -85,8 +85,8 @@ public interface AddressMapper extends BaseMapper<Address> {
      * @param address address
      * @param userId userId
      */
-    @UpdateProvider(type = AddressMapperProvider.class, method = "updateAddressByPrimaryKeyAndUserIdSelective")
-    void updateAddressByPrimaryKeyAndUserIdSelective(@Param("address") Address address, @Param("userId") Integer userId);
+    @UpdateProvider(type = AddressMapperProvider.class, method = "updateAddressByUserIdSelective")
+    void updateAddressByUserIdSelective(@Param("address") Address address, @Param("userId") Integer userId);
 
     /**
      * 根据用户 id 和 id 删除地址 - 当前用户调用

@@ -61,15 +61,4 @@ public class ExceptionAspect {
         }
         return result;
     }
-
-
-//    @After("handleException()")
-//    public void after() {
-//        logger.info("After 被执行");
-//    }
-
-//    @AfterReturning(value = "handleException()", returning = "returnVal")
-//    public void afterReturn(Object returnVal) {
-//        logger.info("After Return 被执行, returnVal: " + returnVal);
-//    }
 }

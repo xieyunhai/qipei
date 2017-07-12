@@ -39,8 +39,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public HttpResult<Address> updateAddressByPrimaryKey(Address address) {
-        addressMapper.updateAddressByPrimaryKeySelective(address);
+    public HttpResult<Address> updateAddress(Address address) {
+        addressMapper.updateAddressSelective(address);
         return HttpResultUtil.success(addressMapper.getAddressByPrimaryKey(address.getId()));
     }
 
@@ -71,7 +71,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public HttpResult<Address> updateAddressByPrimaryKeyAndUserId(Address address, Integer userId) {
-        addressMapper.updateAddressByPrimaryKeyAndUserIdSelective(address, userId);
+        addressMapper.updateAddressByUserIdSelective(address, userId);
         return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(address.getId(), userId));
     }
 
