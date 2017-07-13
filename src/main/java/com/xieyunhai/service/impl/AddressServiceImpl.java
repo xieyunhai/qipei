@@ -21,6 +21,7 @@ public class AddressServiceImpl implements AddressService {
     @Resource
     private AddressMapper addressMapper;
 
+    // backend
     @Override
     public HttpResult<List<Address>> listAddresses() {
         return HttpResultUtil.success(addressMapper.listAddresses());
@@ -51,6 +52,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
 
+
+    // portal
     @Override
     public HttpResult<List<Address>> listAddressesByUserId(Integer userId) {
         List<Address> addressList = addressMapper.listAddressesByUserId(userId);
@@ -58,19 +61,19 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public HttpResult<Address> getAddressByAddressIdAndUserId(Integer id, Integer userId) {
+    public HttpResult<Address> getAddressByPrimaryKeyAndUserId(Integer id, Integer userId) {
         return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(id, userId));
     }
 
     @Override
-    public HttpResult<Address> saveAddressByUserId(Address address, Integer userId) {
+    public HttpResult<Address> saveAddressByAddressAndUserId(Address address, Integer userId) {
         address.setUserId(userId);
         addressMapper.saveAddressByUserId(address);
         return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(address.getId(), userId));
     }
 
     @Override
-    public HttpResult<Address> updateAddressByPrimaryKeyAndUserId(Address address, Integer userId) {
+    public HttpResult<Address> updateAddressByAddressAndUserId(Address address, Integer userId) {
         addressMapper.updateAddressByUserIdSelective(address, userId);
         return HttpResultUtil.success(addressMapper.getAddressByPrimaryKeyAndUserId(address.getId(), userId));
     }

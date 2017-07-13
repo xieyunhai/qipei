@@ -8,6 +8,8 @@ import com.xieyunhai.entity.User;
 import com.xieyunhai.service.AddressService;
 import com.xieyunhai.service.CustomerService;
 import com.xieyunhai.util.HttpResultUtil;
+import com.xieyunhai.util.MD5Util;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -36,6 +38,9 @@ public class CustomerController {
     public HttpResult<Customer> updateUserByPrimaryKeyAndUserId(@PathVariable("id") Integer id, Customer customer, HttpSession session) {
         User user = User.getUserBySession(session);
         customer.setId(id);
+        if (!ObjectUtils.isEmpty(customer.getPassword())) {
+            customer.setPassword(MD5Util.MD5EncodeUtf8(customer.getPassword()));
+        }
         return customerService.updateCustomerByCustomerAndUserIdSelective(customer, user.getId());
     }
 
@@ -49,40 +54,40 @@ public class CustomerController {
     public HttpResult<Address> getAddressByPrimaryKeyAndUserId(
             @PathVariable("addressId") Integer addressId,
             HttpSession session) {
-        User curUser = User.getUserBySession(session);
-        return addressService.getAddressByAddressIdAndUserId(addressId, curUser.getId());
+        User user = User.getUserBySession(session);
+        return addressService.getAddressByPrimaryKeyAndUserId(addressId, user.getId());
     }
 
     @GetMapping("/{userId}/address")
     public HttpResult<List<Address>> listAddressesByUserId(HttpSession session) {
-        User curUser = User.getUserBySession(session);
-        return addressService.listAddressesByUserId(curUser.getId());
+        User user = User.getUserBySession(session);
+        return addressService.listAddressesByUserId(user.getId());
     }
 
     @PutMapping("/{userId}/address")
-    public void saveAddress(Address address, HttpSession session) {
-        User curUser = (User) session.getAttribute(Const.CURRENT_USER);
-        addressService.saveAddressByUserId(address, curUser.getId());
+    public HttpResult<Address> saveAddressByAddressAndUserId(Address address, HttpSession session) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        return addressService.saveAddressByAddressAndUserId(address, user.getId());
     }
 
     @PostMapping("/{userId}/address/{addressId}")
     public HttpResult<Address> updateAddressByAddressAndUserId(
             Address address, @PathVariable("addressId") Integer addressId, HttpSession session) {
         address.setId(addressId);
-        User curUser = (User) session.getAttribute(Const.CURRENT_USER);
-        return addressService.updateAddressByPrimaryKeyAndUserId(address, curUser.getId());
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        return addressService.updateAddressByAddressAndUserId(address, user.getId());
     }
 
     @DeleteMapping("/{userId}/address/{addressId}")
     public HttpResult removeAddressByPrimaryKeyAndUserId(@PathVariable("addressId") Integer addressId, HttpSession session) {
-        User curUser = (User) session.getAttribute(Const.CURRENT_USER);
-        return addressService.removeAddressByPrimaryKeyAndUserId(addressId, curUser.getId());
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        return addressService.removeAddressByPrimaryKeyAndUserId(addressId, user.getId());
     }
 
 
     @PostMapping("/login")
     public HttpResult login(String username, String password, HttpSession session) {
-        HttpResult httpResult = customerService.login(username, password);
+        HttpResult httpResult = customerService.login(username, MD5Util.MD5EncodeUtf8(password));
         if (httpResult.getSuccess()) {
             session.setAttribute(Const.CURRENT_USER, httpResult.getData());
         }
@@ -98,7 +103,7 @@ public class CustomerController {
     @PutMapping("/register")
     public HttpResult<Customer> register(Customer customer) {
         // todo 校验数据的合法性
-        return customerService.saveUser(customer);
+        return customerService.saveCustomerByCustomer(customer);
     }
 
 }

@@ -35,9 +35,12 @@ public class PrivilegeAspect {
 
     @Before("handlePrivilege()")
     public void before(JoinPoint joinPoint) throws Throwable {
+        String className = joinPoint.getTarget().getClass().getName();
+        String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
         // 得到方法的参数名
-        String[] argNames = ((CodeSignature) (joinPoint.getStaticPart().getSignature())).getParameterNames();
+        String[] argNames = ParamsUtil.getFieldsName(className, methodName);
+
         Map<String, Object> params = ParamsUtil.getParams(argNames, args);
 
         if (params.containsKey("id") && params.containsKey("userId")){
@@ -48,6 +51,12 @@ public class PrivilegeAspect {
 
         if (params.containsKey("user") && params.containsKey("userId")) {
             if (((User) params.get("user")).getId().intValue() != ((Integer) params.get("userId"))) {
+                throw new PermissionDeniedException(HttpResultEnum.PERMISSION_DENIED);
+            }
+        }
+
+        if (params.containsKey("customer") && params.containsKey("userId")) {
+            if (((User) params.get("customer")).getId().intValue() != ((Integer) params.get("userId"))) {
                 throw new PermissionDeniedException(HttpResultEnum.PERMISSION_DENIED);
             }
         }

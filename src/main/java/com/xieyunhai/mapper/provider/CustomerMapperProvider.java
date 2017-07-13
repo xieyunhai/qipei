@@ -19,7 +19,9 @@ import static org.apache.ibatis.jdbc.SqlBuilder.VALUES;
  */
 @Component
 public class CustomerMapperProvider {
-    public String saveCustomer(Customer customer) {
+
+    // backend
+    public String saveCustomerByCustomer(Customer customer) {
         return new SQL() {
             {
                 INSERT_INTO("customer");
@@ -53,15 +55,10 @@ public class CustomerMapperProvider {
         }.toString();
     }
 
-    public String updateCustomerSelective(Customer params) {
+    public String updateCustomerByCustomerSelective(Customer params) {
         return new SQL() {
             {
                 // todo 多表更新
-//                SELECT("*");
-//                FROM("customer customer");
-//                SELECT("*");
-//                FROM("user user");
-//                LEFT_OUTER_JOIN("user user ON customer.id = user.id");
                 UPDATE("customer customer, user user");
                 if (params.getManagerId() != null) {
                     SET("manager_id = #{managerId, jdbcType=VARCHAR}");
@@ -140,86 +137,88 @@ public class CustomerMapperProvider {
         }.toString();
     }
 
-    public String updateCustomerByCustomerAndUserIdSelective(Map<String, Object> params) {
-        Customer c = (Customer) params.get("customer");
+    // portal
+    public String updateCustomerByCustomerAndUserIdSelective(Map<String, Object> map) {
+        Customer customer = (Customer) map.get("param1");
+        Integer userId = (Integer) map.get("param2");
         return new SQL() {
             {
                 // todo 多表更新
                 UPDATE("customer customer, user user");
-                if (c.getManagerId() != null) {
-                    SET("manager_id = #{managerId, jdbcType=VARCHAR}");
+                if (customer.getManagerId() != null) {
+                    SET("manager_id = #{param1.managerId, jdbcType=VARCHAR}");
                 }
-                if (c.getPoints() != null) {
-                    SET("points = #{points, jdbcType=INTEGER}");
+                if (customer.getPoints() != null) {
+                    SET("points = #{param1.points, jdbcType=INTEGER}");
                 }
-                if (c.getInvoiceTitle() != null) {
-                    SET("invoice_title = #{invoiceTitle, jdbcType=VARCHAR}");
+                if (customer.getInvoiceTitle() != null) {
+                    SET("invoice_title = #{param1.invoiceTitle, jdbcType=VARCHAR}");
                 }
-                if (c.getShopName() != null) {
-                    SET("shop_name = #{shopName, jdbcType=VARCHAR}");
+                if (customer.getShopName() != null) {
+                    SET("shop_name = #{param1.shopName, jdbcType=VARCHAR}");
                 }
-                if (c.getUserSource() != null) {
-                    SET("user_source = #{userSource, jdbcType=TINYINT}");
+                if (customer.getUserSource() != null) {
+                    SET("user_source = #{param1.userSource, jdbcType=TINYINT}");
                 }
-                if (c.getUserLevel() != null) {
-                    SET("user_level = #{userLevel, jdbcType=TINYINT}");
+                if (customer.getUserLevel() != null) {
+                    SET("user_level = #{param1.userLevel, jdbcType=TINYINT}");
                 }
-                if (c.getReferee() != null) {
-                    SET("referee = #{referee, jdbcType=INTEGER}");
+                if (customer.getReferee() != null) {
+                    SET("referee = #{param1.referee, jdbcType=INTEGER}");
                 }
-                if (c.getUsername() != null) {
-                    SET("username = #{username, jdbcType=VARCHAR}");
+                if (customer.getUsername() != null) {
+                    SET("username = #{param1.username, jdbcType=VARCHAR}");
                 }
-                if (c.getPassword() != null) {
-                    SET("password = #{password, jdbcType=VARCHAR}");
+                if (customer.getPassword() != null) {
+                    SET("password = #{param1.password, jdbcType=VARCHAR}");
                 }
-                if (c.getName() != null) {
-                    SET("name = #{name, jdbcType=VARCHAR}");
+                if (customer.getName() != null) {
+                    SET("name = #{param1.name, jdbcType=VARCHAR}");
                 }
-                if (c.getSex() != null) {
-                    SET("sex = #{sex, jdbcType=TINYINT}");
+                if (customer.getSex() != null) {
+                    SET("sex = #{param1.sex, jdbcType=TINYINT}");
                 }
-                if (c.getAvatar() != null) {
-                    SET("avatar = #{avatar, jdbcType=VARCHAR}");
+                if (customer.getAvatar() != null) {
+                    SET("avatar = #{param1.avatar, jdbcType=VARCHAR}");
                 }
-                if (c.getEmail() != null) {
-                    SET("email = #{email, jdbcType=VARCHAR}");
+                if (customer.getEmail() != null) {
+                    SET("email = #{param1.email, jdbcType=VARCHAR}");
                 }
-                if (c.getTelephone() != null) {
-                    SET("telephone = #{telephone, jdbcType=VARCHAR}");
+                if (customer.getTelephone() != null) {
+                    SET("telephone = #{param1.telephone, jdbcType=VARCHAR}");
                 }
-                if (c.getCellphone() != null) {
-                    SET("cellphone = #{cellphone, jdbcType=VARCHAR}");
+                if (customer.getCellphone() != null) {
+                    SET("cellphone = #{param1.cellphone, jdbcType=VARCHAR}");
                 }
-                if (c.getChecked() != null) {
-                    SET("checked = #{checked, jdbcType=TINYINT}");
+                if (customer.getChecked() != null) {
+                    SET("checked = #{param1.checked, jdbcType=TINYINT}");
                 }
-                if (c.getWxOpenId() != null) {
-                    SET("wx_open_id = #{wxOpenId, jdbcType=VARCHAR}");
+                if (customer.getWxOpenId() != null) {
+                    SET("wx_open_id = #{param1.wxOpenId, jdbcType=VARCHAR}");
                 }
-                if (c.getWxNickname() != null) {
-                    SET("wx_nickname = #{wxNickname, jdbcType=VARCHAR}");
+                if (customer.getWxNickname() != null) {
+                    SET("wx_nickname = #{param1.wxNickname, jdbcType=VARCHAR}");
                 }
-                if (c.getLoginTimes() != null) {
-                    SET("login_times = #{loginTimes, jdbcType=INTEGER}");
+                if (customer.getLoginTimes() != null) {
+                    SET("login_times = #{param1.loginTimes, jdbcType=INTEGER}");
                 }
-                if (c.getLastLoginIp() != null) {
-                    SET("last_login_ip = #{lastLoginIp, jdbcType=VARCHAR}");
+                if (customer.getLastLoginIp() != null) {
+                    SET("last_login_ip = #{param1.lastLoginIp, jdbcType=VARCHAR}");
                 }
-                if (c.getLastLoginTime() != null) {
-                    SET("last_login_time = #{lastLoginTime, jdbcType=TIMESTAMP}");
+                if (customer.getLastLoginTime() != null) {
+                    SET("last_login_time = #{param1.lastLoginTime, jdbcType=TIMESTAMP}");
                 }
-                if (c.getRemarks() != null) {
-                    SET("remarks = #{remarks, jdbcType=VARCHAR}");
+                if (customer.getRemarks() != null) {
+                    SET("remarks = #{param1.remarks, jdbcType=VARCHAR}");
                 }
-                if (c.getStatus() != null) {
-                    SET("status = #{status, jdbcType=TINYINT}");
+                if (customer.getStatus() != null) {
+                    SET("status = #{param1.status, jdbcType=TINYINT}");
                 }
                 SET("user.update_time = now()");
                 SET("customer.update_time = now()");
                 WHERE("customer.id = user.id");
-                WHERE("customer.id = #{id}");
-                WHERE("user_id = #{params.userId}");
+                WHERE("customer.id = #{param1.id}");
+                WHERE("customer.id = #{param2}");
             }
         }.toString();
     }

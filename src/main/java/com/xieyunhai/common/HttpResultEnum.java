@@ -14,14 +14,22 @@ public enum HttpResultEnum {
     SUCCESS_DELETE(40, "删除成功"),
 
     NEED_LOGIN(100, "需要登录"),
+    ERROR_LOGIN(101, "用户名或者密码错误"),
+    SUCCESS_LOGIN(102, "登录成功"),
+
+    ERROR_REGISTER(103, "注册失败"),
+    SUCCESS_REGISTER(104, "注册成功"),
+
     PERMISSION_DENIED(110, "权限不足"),
     ERROR_FIELD(120, "字段错误"),
 
-    FAIL(400, "失败"),
-    FAIL_ADD(410, "添加失败"),
-    FAIL_UPDATE(420, "更新失败"),
-    FAIL_SAVE(430, "保存失败"),
-    FAIL_DELETE(440, "删除失败"),
+
+
+    ERROR(400, "失败"),
+    ERROR_ADD(410, "添加失败"),
+    ERROR_UPDATE(420, "更新失败"),
+    ERROR_SAVE(430, "保存失败"),
+    ERROR_DELETE(440, "删除失败"),
 
     NOT_FOUND(404, "没有找到"),
     SERVER_ERROR(500, "服务器错误"),

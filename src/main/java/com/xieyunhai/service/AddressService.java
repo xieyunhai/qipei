@@ -11,47 +11,26 @@ import java.util.List;
  */
 public interface AddressService {
 
-    /**
-     * list all address
-     * @return success: addresses
-     */
+    // backend
     HttpResult<List<Address>> listAddresses();
 
-    /**
-     * get address
-     * @param id primary key
-     * @return success: address or null
-     */
     HttpResult<Address> getAddressByPrimaryKey(Integer id);
 
-    /**
-     * 保存地址
-     * @param address address
-     * @return success: address, fail: error
-     */
     HttpResult<Address> saveAddress(Address address);
 
-    /**
-     * 更新地址
-     * @param address address
-     * @return success: address, fail: error
-     */
     HttpResult<Address> updateAddress(Address address);
 
-    /**
-     * 删除地址
-     * @param id primary key
-     * @return success: null, fail: error
-     */
     HttpResult removeAddressByPrimaryKey(Integer id);
 
+
+    // portal
     HttpResult<List<Address>> listAddressesByUserId(Integer userId);
 
-    HttpResult<Address> getAddressByAddressIdAndUserId(Integer id, Integer userId);
+    HttpResult<Address> getAddressByPrimaryKeyAndUserId(Integer id, Integer userId);
 
-    HttpResult<Address> saveAddressByUserId(Address address, Integer userId);
+    HttpResult<Address> saveAddressByAddressAndUserId(Address address, Integer userId);
 
-    HttpResult<Address> updateAddressByPrimaryKeyAndUserId(Address address, Integer userId);
+    HttpResult<Address> updateAddressByAddressAndUserId(Address address, Integer userId);
 
     HttpResult removeAddressByPrimaryKeyAndUserId(Integer id, Integer userId);
 }

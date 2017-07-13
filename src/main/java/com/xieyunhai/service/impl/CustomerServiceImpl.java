@@ -13,6 +13,7 @@ import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,12 +29,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Resource
     private CustomerMapper customerMapper;
 
+    // backend
     @Override
     public HttpResult<List<Customer>> listCustomers() {
         return HttpResultUtil.success(customerMapper.listCustomers());
     }
 
-    // backend
     @Override
     public HttpResult<Customer> getCustomerByPrimaryKey(Integer id) {
         return HttpResultUtil.success(customerMapper.getCustomerByPrimaryKey(id));
@@ -42,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor =
             TransactionException.class)
-    public HttpResult<Customer> saveCustomer(Customer customer) {
+    public HttpResult<Customer> saveCustomerByCustomer(Customer customer) {
         customer.setPassword(MD5Util.MD5EncodeUtf8(customer.getPassword()));
         customer.setClassKey((short) 1);
         userMapper.saveUserByUser(customer);
@@ -54,8 +55,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor =
             TransactionException.class)
     public HttpResult<Customer> updateCustomerSelective(Customer customer) {
-        customerMapper.updateCustomerByCustomerSelective(customer);
-        return getCustomerByPrimaryKey(customer.getId());
+        if (!ObjectUtils.isEmpty(customer.getPassword())) {
+            customer.setPassword(MD5Util.MD5EncodeUtf8(customer.getPassword()));
+        }
+        return HttpResultUtil
+                .success(customerMapper.getCustomerByPrimaryKey(customer.getId()), HttpResultEnum.SUCCESS_UPDATE);
     }
 
     @Override
@@ -67,6 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
 
+
     // portal
     @Override
     public HttpResult<Customer> getCustomerByPrimaryKeyAndUserId(Integer id, Integer userId) {
@@ -74,25 +79,31 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor =
+            TransactionException.class)
     public HttpResult<Customer> updateCustomerByCustomerAndUserIdSelective(Customer customer, Integer userId) {
         customerMapper.updateCustomerByCustomerAndUserIdSelective(customer, userId);
-        return HttpResultUtil.success(customerMapper.getCustomerByPrimaryKey(customer.getId()));
+        if (!ObjectUtils.isEmpty(customer.getPassword())) {
+            customer.setPassword(MD5Util.MD5EncodeUtf8(customer.getPassword()));
+        }
+        return HttpResultUtil.success(customerMapper.getCustomerByPrimaryKeyAndUserId(customer.getId(), userId),
+                HttpResultEnum.SUCCESS_UPDATE);
     }
 
     @Override
-    public HttpResult<Customer> login(String username, String password) {
-        return HttpResultUtil.success(customerMapper.getCustomerByUsernameAndPassword(username, password));
-    }
-
-    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor =
+            TransactionException.class)
     public HttpResult removeCustomerByPrimaryKeyAndUserId(Integer id, Integer userId) {
         customerMapper.removeCustomerByPrimaryKeyAndUserId(id, userId);
         return HttpResultUtil.success(HttpResultEnum.SUCCESS_DELETE);
     }
 
     @Override
-    public HttpResult<Customer> saveUser(Customer customer) {
-        customerMapper.saveCustomerByCustomer(customer);
-        return HttpResultUtil.success(customerMapper.getCustomerByPrimaryKey(customer.getId()));
+    public HttpResult<Customer> login(String username, String password) {
+        Customer customer = customerMapper.getCustomerByUsernameAndPassword(username, password);
+        if (ObjectUtils.isEmpty(customer)) {
+            return HttpResultUtil.error(HttpResultEnum.ERROR_LOGIN);
+        }
+        return HttpResultUtil.success(customer, HttpResultEnum.SUCCESS_LOGIN);
     }
 }

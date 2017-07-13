@@ -2,6 +2,7 @@ package com.xieyunhai.service;
 
 import com.xieyunhai.common.HttpResult;
 import com.xieyunhai.entity.Customer;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -15,17 +16,21 @@ import java.util.List;
  */
 public interface CustomerService {
 
-    // manage
+    // backend
     HttpResult<List<Customer>> listCustomers();
 
     HttpResult<Customer> getCustomerByPrimaryKey(Integer id);
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor =
             TransactionException.class)
-    HttpResult<Customer> saveCustomer(Customer customer);
+    HttpResult<Customer> saveCustomerByCustomer(Customer customer);
 
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor =
+            TransactionException.class)
     HttpResult removeCustomerByPrimaryKey(Integer id);
 
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor =
+            TransactionException.class)
     HttpResult<Customer> updateCustomerSelective(Customer customer);
 
 
@@ -33,11 +38,13 @@ public interface CustomerService {
     // portal
     HttpResult<Customer> getCustomerByPrimaryKeyAndUserId(Integer id, Integer userId);
 
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor =
+            TransactionException.class)
     HttpResult<Customer> updateCustomerByCustomerAndUserIdSelective(Customer customer, Integer userId);
 
-    HttpResult<Customer> login(String username, String password);
-
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor =
+            TransactionException.class)
     HttpResult removeCustomerByPrimaryKeyAndUserId(Integer id, Integer userId);
 
-    HttpResult<Customer> saveUser(Customer customer);
+    HttpResult<Customer> login(String username, String password);
 }

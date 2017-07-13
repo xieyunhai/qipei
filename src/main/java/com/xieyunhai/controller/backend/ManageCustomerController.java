@@ -3,7 +3,6 @@ package com.xieyunhai.controller.backend;
 
 import com.xieyunhai.common.HttpResult;
 import com.xieyunhai.entity.Customer;
-import com.xieyunhai.entity.User;
 import com.xieyunhai.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +43,6 @@ public class ManageCustomerController {
     @PutMapping("/register")
     public HttpResult<Customer> register(Customer customer) {
         // todo 校验数据的合法性
-        return customerService.saveCustomer(customer);
+        return customerService.saveCustomerByCustomer(customer);
     }
 }
